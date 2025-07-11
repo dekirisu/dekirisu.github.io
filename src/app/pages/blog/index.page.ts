@@ -30,7 +30,7 @@ export interface SocialAttributes {
     </div>
 
     <div class="p-5  max-w-[1200px] border-t border-gray-200 m-auto mt-8 text-left">
-      <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md">Development</h3>
+      <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md">Motion Design</h3>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
