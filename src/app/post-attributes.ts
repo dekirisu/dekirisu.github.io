@@ -1,6 +1,8 @@
 export default interface PostAttributes {
   title: string;
   slug: string;
-  description: string;
-  coverImage: string;
+  thumbnail: string;
+  usage: string;
+  used: string[];
+  classes: string;
 }

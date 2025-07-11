@@ -10,7 +10,7 @@ import PostAttributes from '../../post-attributes';
   template: `
     @if (post$ | async; as post) {
     <article>
-      <img class="post__image" [src]="post.attributes.coverImage" />
+      <img class="post__image" [src]="post.attributes.thumbnail" />
       <analog-markdown [content]="post.content" />
     </article>
     }
@@ -22,5 +22,8 @@ import PostAttributes from '../../post-attributes';
   `,
 })
 export default class BlogPostComponent {
-  readonly post$ = injectContent<PostAttributes>('slug');
+  readonly post$ = injectContent<PostAttributes>({
+      param: 'slug',
+      subdirectory: 'motion'
+  });
 }
