@@ -8,28 +8,17 @@ import PostAttributes from '../../post-attributes';
   selector: 'app-blog',
   imports: [RouterLink],
   template: `
-    <h1>Blog Archive</h1>
+    
+    <div class="w-[fit-content] mx-auto">
+      <div class="p-3 bg-white rounded-xl border border-black/25 shadow-md shrink-0">
+        <img class="size-28 border-2 border-black rounded-md" src="profile.jpg"/>
+      </div>
+      <h2 class="text-3xl mt-3 mb-2 py-1 bg-white border border-black/5 text-center font-bold">Dekirisu</h2>
+    </div>
 
-    @for (post of posts; track post.attributes.slug) {
-    <a [routerLink]="['/blog/', post.attributes.slug]">
-      <h2 class="post__title">{{ post.attributes.title }}</h2>
-      <p class="post__desc">{{ post.attributes.description }}</p>
-    </a>
-    }
-  `,
-  styles: `
-    a {
-      text-align: left;
-      display: block;
-      margin-bottom: 2rem;
-    }
-
-    .post__title,
-    .post__desc {
-      margin: 0;
-    }
   `,
 })
+
 export default class BlogComponent {
   readonly posts = injectContentFiles<PostAttributes>();
 }
