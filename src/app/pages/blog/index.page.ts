@@ -41,7 +41,7 @@ export interface SocialAttributes {
 
             <div class="p-1 gap-1 flex absolute bottom-1 right-1">
               @for (usd of post.attributes.used; track usd) {
-                <div class="p-1 bg-white/85 gap-1 rounded-sm shadow-xl border-2">
+                <div class="p-1 bg-white/90 gap-1 rounded-sm shadow-xl border-2">
                   <img src="/software/{{usd}}.svg" class="size-6 inline-block" title="{{usd}}">
                 </div>
               }
@@ -64,7 +64,7 @@ export interface SocialAttributes {
 
             <div class="p-1 gap-1 flex absolute bottom-1 right-1">
               @for (usd of post.attributes.used; track usd) {
-                <div class="p-1 bg-white/85 gap-1 rounded-sm shadow-xl border-2">
+                <div class="p-1 bg-white/90 gap-1 rounded-sm shadow-xl border-2">
                   <img src="/software/{{usd}}.svg" class="size-6 inline-block" title="{{usd}}">
                 </div>
               }
