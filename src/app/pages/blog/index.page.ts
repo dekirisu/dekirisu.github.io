@@ -18,12 +18,12 @@ export interface SocialAttributes {
       <div class="p-3 bg-white rounded-xl border border-black/25 shadow-md shrink-0">
         <img class="size-28 border-2 border-black rounded-md" src="profile.jpg"/>
       </div>
-      <h2 class="text-3xl mt-3 mb-2 py-1 bg-white border border-black/5 text-center font-bold">Dekirisu</h2>
+      <h2 class="text-3xl mt-2 mb-3 py-1  text-center font-bold">Dekirisu</h2>
     </div>
 
      <div class="gap-2 flex justify-center">
       @for (post of socials; track post.attributes.link) {
-        <a href={{post.attributes.link}} class="inline-block bg-white rounded-full p-2 border border-black/25 shadow-md">
+        <a href={{post.attributes.link}} class="inline-block bg-white rounded-full p-2 border border-black/25 shadow-md hover:invert hover:scale-120 ease-in transition-all">
           <img src="/socials/{{post.attributes.icon}}" class="size-6">
         </a>
       }
@@ -34,7 +34,8 @@ export interface SocialAttributes {
       <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md">Development</h3>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of devs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
+          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md relative border-2 hover:scale-105 ease-in transition-all" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
+            
             <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold">
               <a href="{{post.attributes.usage}}">{{post.attributes.title}}</a>
             </div>
@@ -57,7 +58,7 @@ export interface SocialAttributes {
       <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md">Motion Design</h3>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
+          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md relative border-2 hover:scale-105 ease-in transition-all" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
             <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold">
               <a href="{{post.attributes.usage}}">{{post.attributes.title}}</a>
             </div>
