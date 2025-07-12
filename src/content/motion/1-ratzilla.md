@@ -1,7 +1,7 @@
 ---
 title: Ratzilla | Header
 slug: ratzilla-header
-thumbnail: https://raw.githubusercontent.com/orhun/ratzilla/refs/heads/main/assets/ratzilla.gif
+thumbnail: /thumbnails/ratzilla.webp
 usage: https://github.com/orhun/ratzilla
 classes: bg-cover
 used: [illustrator, after-effects]
