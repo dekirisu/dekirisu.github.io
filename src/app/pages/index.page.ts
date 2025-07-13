@@ -43,8 +43,8 @@ background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBo
 
      <div class="gap-2 flex justify-center">
       @for (post of socials; track post.attributes.link) {
-        <a href={{post.attributes.link}} class="bg-[#fdfdff] inline-block  rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 transition-all" title="my {{post.attributes.icon.toUpperCase()}}">
-          <img src="/socials/{{post.attributes.icon}}.svg" class="size-6">
+        <a href={{post.attributes.link}} class="bg-[#fdfdff] inline-block  rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 transition-all" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
+          <img src="/socials/{{post.attributes.icon}}.svg" class="size-6">         
         </a>
       }
     </div>
