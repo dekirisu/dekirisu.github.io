@@ -14,11 +14,12 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     analog({
+      static: true,
       content: {
         highlighter: 'shiki',
       },
       prerender: {
-        routes: ['/blog', '/blog/2022-12-27-my-first-post'],
+          routes: [{route:'/', staticData:true}],
       },
     }),
     tailwindcss()
