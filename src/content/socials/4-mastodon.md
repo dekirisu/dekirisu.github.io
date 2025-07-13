@@ -1,6 +1,6 @@
 ---
 link: https://mastodon.social/@dekirisu
-icon: mastodon.svg
+icon: mastodon
 ---
 
 

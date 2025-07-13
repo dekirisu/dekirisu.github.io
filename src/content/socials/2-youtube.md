@@ -1,6 +1,6 @@
 ---
 link: https://youtube.com/@dekirisu
-icon: youtube.svg
+icon: youtube
 ---
 
 
