@@ -51,7 +51,7 @@ background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBo
 
     <div class="p-5  max-w-[1200px] border-t-2 border-gray-300 m-auto mt-8 text-left">
       <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md shadow-sm/30">Development</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
+      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of devs; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
             
@@ -79,7 +79,7 @@ background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBo
 
     <div class="p-5  max-w-[1200px] border-t-2 border-gray-300 m-auto mt-8 text-left">
       <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md shadow-sm/30">Motion Design</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
+      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
             

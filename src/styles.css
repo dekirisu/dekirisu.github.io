@@ -6,3 +6,7 @@ body {
   display: block;
   height: 100%;
 }
+
+@theme {  
+    --breakpoint-xs: 32rem;
+}
