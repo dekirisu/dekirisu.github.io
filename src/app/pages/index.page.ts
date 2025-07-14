@@ -13,20 +13,6 @@ export interface SocialAttributes {
   selector: 'app-blog',
   imports: [RouterLink],
 
-  styles: `
-
-    .bg-warning {
-background-color: #cf6c84;
-background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c45c71' fill-opacity='0.99' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    .bg-profile {
-background-color: #fafaff;
-background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-    }
-
-  `,
-
   template: `
 
     <!--
@@ -35,22 +21,35 @@ background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBo
     -->
 
     <div class="w-[fit-content] mx-auto">
-      <div class="p-3 bg-white rounded-xl border-2 border-black shadow-sm/20 shrink-0 bg-profile">
-        <img class="size-28 border-2 border-black rounded-md shadow-sm/20" src="profile.jpg"/>
-      </div>
-      <h2 class="text-3xl mt-2 mb-3 py-1  text-center font-bold text-shadow-xs/20">Dekirisu</h2>
+
+        <div class="mb-6">
+            <div class="p-3 pb-1 bg-white rounded-xl border-2 border-black shadow-sm/20 shrink-0 bg-profile relative inline-block">
+                <img class="size-28 border-2 border-black rounded-md shadow-sm/20" src="profile.jpg"/>
+                <div class="text-2xl py-1 text-center font-bold text-shadow-xs/20">Dekirisu</div>
+            </div>
+            <div class="bg-terminal text-white px-4 py-2 rounded-lg font-bold shadow-sm/30 w-40 text-lg inline-block relative align-top top-5 ml-2">
+                <div class="absolute size-[24px] left-[-10px] bg-terminal rotate-45 top-[10px] rounded-sm shadow-sm/30"></div>
+                I <b class="text-deki-pink decoration-dotted underline underline-offset-2 decoration-3" title="yes, this is a crabby wordplay 🦀">claw</b> my way through <b class="text-deki-blue">design</b> and <b class="text-deki-blue">code</b>!
+            </div>
+        </div>
+ 
     </div>
 
      <div class="gap-2 flex justify-center">
       @for (post of socials; track post.attributes.link) {
-        <a href={{post.attributes.link}} class="bg-[#fdfdff] inline-block  rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 transition-all" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
+        <a href={{post.attributes.link}} class="bg-profile-lite inline-block  rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 transition-all bg-[#fafaff]" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
           <img src="/socials/{{post.attributes.icon}}.svg" class="size-6">         
         </a>
       }
     </div>
 
-    <div class="p-5  max-w-[1200px] border-t-2 border-gray-300 m-auto mt-8 text-left">
-      <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md shadow-sm/30">Development</h3>
+     <div class="p-5  max-w-[1200px] border-t-2 border-gray-300 m-auto mt-8 text-left">
+      <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
+      <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative ">
+        <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
+        Things I <b class="text-deki-pink">develop</b> by <b class="text-deki-orange">myself</b><b> !</b>
+
+      </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of devs; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
@@ -59,7 +58,7 @@ background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBo
               {{post.attributes.title}}
             </div>
 
-            <a class="bg-orange-300 border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-cyan-200 transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
@@ -78,7 +77,11 @@ background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBo
 
 
     <div class="p-5  max-w-[1200px] border-t-2 border-gray-300 m-auto mt-8 text-left">
-      <h3 class="text-2xl font-bold mb-4 bg-black text-white py-2 px-4 inline-block rounded-md shadow-sm/30">Motion Design</h3>
+      <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
+      <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative">
+        <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
+        Things I <b class="text-deki-pink">animated</b> by <b class="text-deki-orange">myself</b><b> !</b>
+      </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
@@ -87,7 +90,7 @@ background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBo
               {{post.attributes.title}}
             </div>
 
-            <a class="bg-orange-300 border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-cyan-200 transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
