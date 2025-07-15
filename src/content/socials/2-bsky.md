@@ -1,5 +1,5 @@
 ---
-link: https://bsky.app/profile/dekirisu.bsky.social
+link: https://bsky.app/profile/dekirisu.com
 icon: bluesky
 ---
 
