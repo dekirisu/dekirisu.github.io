@@ -35,6 +35,45 @@
         return '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
       }
     </script>
+    <script>
+      function damageProfile() {
+        var img = document.getElementById('profile-img');
+        img.classList.add('damage-shake');
+        setTimeout(function() { img.classList.remove('damage-shake'); }, 500);
+        var popup = document.createElement('div');
+        popup.className = 'damage-popup';
+        popup.textContent = '-1';
+        popup.style.left = (30 + Math.random() * 40) + '%';
+        popup.style.top = (20 + Math.random() * 40) + '%';
+        var container = document.getElementById('profile-container');
+        if (container) container.appendChild(popup);
+        setTimeout(function() {
+          popup.classList.add('show');
+        }, 10);
+        setTimeout(function() {
+          popup.remove();
+        }, 900);
+      }
+      function blockDamage() {
+        var img = document.getElementById('profile-img');
+        img.classList.add('block-flash');
+        setTimeout(function() { img.classList.remove('block-flash'); }, 400);
+        var popup = document.createElement('div');
+        popup.className = 'block-popup';
+        popup.textContent = 'BLOCK';
+        popup.style.top = '40%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        var container = document.getElementById('profile-container');
+        if (container) container.appendChild(popup);
+        setTimeout(function() {
+          popup.classList.add('show');
+        }, 10);
+        setTimeout(function() {
+          popup.remove();
+        }, 800);
+      }
+    </script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -25,6 +25,102 @@ html.dark {
   background-position: 0 5px;
 }
 
+/* Damage taken animation */
+@keyframes damage-shake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px) rotate(-1deg); }
+  20%, 40%, 60%, 80% { transform: translateX(4px) rotate(1deg); }
+}
+
+.damage-shake {
+  animation: damage-shake 0.5s ease-in-out;
+  filter: saturate(0) brightness(1.5) sepia(1) hue-rotate(-50deg) saturate(5) !important;
+}
+
+@keyframes block-flash {
+  0%, 100% { filter: none; }
+  50% { filter: brightness(1.5) saturate(0.5) drop-shadow(0 0 8px rgba(100, 150, 255, 0.8)); }
+}
+
+.block-flash {
+  animation: block-flash 0.4s ease-in-out;
+}
+
+.block-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #8ad4fb;
+  text-shadow: 0 0 8px rgba(138, 212, 251, 0.8), 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.block-popup.show {
+  animation: block-popup 0.8s ease-out forwards;
+}
+
+@keyframes block-popup {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.8);
+  }
+}
+
+.damage-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ff2020;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  transition: opacity 0.1s;
+  white-space: nowrap;
+}
+
+.damage-popup.show {
+  animation: damage-popup 0.8s ease-out forwards;
+}
+
+@keyframes damage-popup {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) scale(0.5);
+  }
+  20% {
+    transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(1.2);
+  }
+  40% {
+    transform: translateX(-50%) translateY(calc(-50% - 20px)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(-50% - 40px)) scale(0.8);
+  }
+}
+
 
 html.dark .border-gray-300 {
   border-color: #232338 !important;

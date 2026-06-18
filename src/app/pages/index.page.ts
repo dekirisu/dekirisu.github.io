@@ -24,13 +24,13 @@ export interface SocialAttributes {
     <div class="w-[fit-content] mx-auto">
 
         <div class="mb-6">
-            <div class="p-3 pb-1 bg-white rounded-xl border-2 border-black shadow-sm/20 shrink-0 bg-profile relative inline-block">
-                <img class="size-28 border-2 border-black rounded-md shadow-sm/20" src="profile.jpg"/>
+            <div class="p-3 pb-1 bg-white rounded-xl border-2 border-black shadow-sm/20 shrink-0 bg-profile relative inline-block" id="profile-container" style="overflow: visible; will-change: transform;">
+                <img class="size-28 border-2 border-black rounded-md shadow-sm/20 cursor-pointer" src="profile.jpg" id="profile-img" onclick="blockDamage()" title="click to block"/>
                 <div class="text-2xl py-1 text-center font-bold text-shadow-xs/20">Dekirisu</div>
             </div>
             <div class="bg-terminal text-white px-4 py-2 rounded-lg font-bold shadow-sm/30 w-40 text-lg inline-block relative align-top top-5 ml-2">
                 <div class="absolute size-[24px] left-[-10px] bg-terminal rotate-45 top-[10px] rounded-sm shadow-sm/30"></div>
-                I <b class="text-deki-pink decoration-dotted underline underline-offset-2 decoration-3" title="yes, this is a crabby wordplay 🦀">claw</b> my way through <b class="text-deki-blue">design</b> and <b class="text-deki-blue">code</b>!
+                I <b class="text-deki-pink decoration-dotted underline underline-offset-2 decoration-3 cursor-pointer select-none" title="don't click that" onclick="damageProfile()" onmousedown="event.preventDefault()" onselectstart="return false" unselectable="on">claw</b> my way through <b class="text-deki-blue">design</b> and <b class="text-deki-blue">code</b>!
             </div>
         </div>
  
