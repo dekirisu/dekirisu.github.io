@@ -39,9 +39,15 @@ export interface ProjectDetail {
           
           <div class="modal-tech">
             <span class="modal-tech-label">Tech:</span>
-            <div class="modal-tech-icons">
+            <div class="modal-tech-list">
               @for (tech of project()?.used; track tech) {
-                <img src="/software/{{tech}}.svg" class="tech-icon" title="{{tech}}"/>
+                @if (techInfo(tech)) {
+                  <span class="tech-pill">
+                    <img src="/software/{{tech}}.svg" class="tech-pill-icon" title="{{tech}}"/>
+                    <span class="tech-pill-name">{{techInfo(tech)!.name}}</span>
+                    <span class="tech-pill-reason">{{techInfo(tech)!.reason}}</span>
+                  </span>
+                }
               }
             </div>
           </div>
@@ -199,9 +205,10 @@ export interface ProjectDetail {
 
       .modal-tech {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 10px;
         padding: 0 24px 24px;
+        flex-wrap: wrap;
       }
 
       .modal-tech-label {
@@ -209,35 +216,67 @@ export interface ProjectDetail {
         font-weight: 700;
         color: #666;
         white-space: nowrap;
+        padding-top: 4px;
       }
 
       html.dark .modal-tech-label {
         color: #888;
       }
 
-      .modal-tech-icons {
+      .modal-tech-list {
         display: flex;
-        gap: 6px;
+        gap: 8px;
         flex-wrap: wrap;
+        flex: 1;
       }
 
-      .tech-icon {
-        width: 28px;
-        height: 28px;
-        border: 2px solid #000;
-        border-radius: 6px;
+      .tech-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
         background-color: #fafaff;
-        padding: 2px;
-        transition: transform 0.15s ease;
+        border: 2px solid #000;
+        border-radius: 8px;
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        transition: all 0.15s ease;
       }
 
-      html.dark .tech-icon {
-        border-color: #3a3a50;
+      html.dark .tech-pill {
         background-color: #2a2a3e;
+        border-color: #3a3a50;
       }
 
-      .tech-icon:hover {
-        transform: scale(1.2);
+      .tech-pill:hover {
+        background-color: #ffdba1;
+        transform: translateY(-1px);
+      }
+
+      html.dark .tech-pill:hover {
+        background-color: #3a3a50;
+      }
+
+      .tech-pill-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .tech-pill-name {
+        font-weight: 700;
+        color: #000;
+      }
+
+      html.dark .tech-pill-name {
+        color: #fff;
+      }
+
+      .tech-pill-reason {
+        color: #666;
+        font-style: italic;
+      }
+
+      html.dark .tech-pill-reason {
+        color: #999;
       }
 
       @keyframes fadeIn {
@@ -262,6 +301,40 @@ export default class ProjectModalComponent {
   readonly open = input.required<boolean>();
   readonly project = input<ProjectDetail | null>(null);
   readonly close = output<void>();
+
+  private static readonly TECH_MAP: Record<string, { name: string; reason: string }> = {
+    analog: { name: 'Analog', reason: 'SSG framework' },
+    vite: { name: 'Vite', reason: 'Build tool' },
+    angular: { name: 'Angular', reason: 'UI framework' },
+    tailwindcss: { name: 'Tailwind', reason: 'Utility CSS' },
+    bevy: { name: 'Bevy', reason: 'ECS game engine' },
+    rust: { name: 'Rust', reason: 'Performance & safety' },
+    blender: { name: 'Blender', reason: '3D modeling' },
+    gimp: { name: 'GIMP', reason: 'Textures & sprites' },
+    photoshop: { name: 'Photoshop', reason: 'Editing & mockups' },
+    illustrator: { name: 'Illustrator', reason: 'Vector art' },
+    'after-effects': { name: 'After Effects', reason: 'Animation' },
+    unity: { name: 'Unity', reason: 'Physics & gameplay' },
+    'c-sharp': { name: 'C#', reason: 'Unity scripting' },
+    nodejs: { name: 'Node.js', reason: 'Tooling & assets' },
+    vim: { name: 'Vim', reason: 'Code editor' },
+    vscode: { name: 'VS Code', reason: 'Code editor' },
+    json: { name: 'JSON', reason: 'Config format' },
+    crates_io: { name: 'crates.io', reason: 'Package registry' },
+    bluesky: { name: 'Bluesky', reason: 'Showcase' },
+    github: { name: 'GitHub', reason: 'Source code' },
+    youtube: { name: 'YouTube', reason: 'Demo videos' },
+    mastodon: { name: 'Mastodon', reason: 'Social' },
+    discord_server: { name: 'Discord', reason: 'Community' },
+    x: { name: 'X', reason: 'Social' },
+    email: { name: 'Email', reason: 'Contact' },
+    link: { name: 'Link', reason: 'External' },
+    visual_studio: { name: 'VS Marketplace', reason: 'Extensions' },
+  };
+
+  techInfo(tech: string): { name: string; reason: string } | undefined {
+    return ProjectModalComponent.TECH_MAP[tech];
+  }
 
   @HostListener('document:keydown.escape')
   onEscape() {
