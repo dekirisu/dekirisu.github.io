@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { injectContentFiles } from '@analogjs/content';
 
 import PostAttributes from '../post-attributes';
+import ProjectModal from '../components/project-modal';
 
 export interface SocialAttributes {
   icon: string;
@@ -11,7 +12,7 @@ export interface SocialAttributes {
 
 @Component({
   selector: 'app-blog',
-  imports: [RouterLink],
+  imports: [RouterLink, ProjectModal],
 
   template: `
 
@@ -52,7 +53,7 @@ export interface SocialAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of devs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
+          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
             
             <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold shadow-sm/30">
               {{post.attributes.title}}
@@ -84,7 +85,7 @@ export interface SocialAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}}  >
+          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
             
             <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold shadow-sm/30">
               {{post.attributes.title}}
@@ -111,6 +112,12 @@ export interface SocialAttributes {
     <div class="mt-8 p-2 border-t-2 border-gray-300 text-gray-500 text-right max-w-[1200px] mx-auto">
         made with <a href="https://analogjs.org/" class="font-bold text-red-700"><img src="/software/analog.svg" class="size-5 inline-block align-sub"> Analog</a>
         and <a href="https://tailwindcss.com/" class="font-bold text-sky-500"><img src="/software/tailwindcss.svg" class="size-5 inline-block align-sub"> Tailwind</a></div>
+
+    <app-project-modal
+      [open]="!!selectedProject()"
+      [project]="selectedProject()"
+      (close)="closeProject()"
+    />
   `,
 })
 
@@ -124,5 +131,15 @@ export default class BlogComponent {
   readonly devs = injectContentFiles<PostAttributes>(
     (file) => file.filename.includes('src/content/devs/')
   );
+
+  readonly selectedProject = signal<PostAttributes | null>(null);
+
+  openProject(project: PostAttributes) {
+    this.selectedProject.set(project);
+  }
+
+  closeProject() {
+    this.selectedProject.set(null);
+  }
 }
 
