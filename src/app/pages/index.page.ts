@@ -44,7 +44,7 @@ export interface SocialAttributes {
       }
     </div>
 
-     <div class="p-5  max-w-[1200px] border-t-2 border-gray-300 m-auto mt-8 text-left">
+     <div class="p-5  max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8 text-left">
       <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
       <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative ">
         <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
@@ -77,7 +77,7 @@ export interface SocialAttributes {
     </div>
 
 
-    <div class="p-5  max-w-[1200px] border-t-2 border-gray-300 m-auto mt-8 text-left">
+    <div class="p-5  max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8 text-left">
       <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
       <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative">
         <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
@@ -109,7 +109,7 @@ export interface SocialAttributes {
     </div>
 
 
-    <div class="mt-8 p-2 border-t-2 border-gray-300 text-gray-500 text-right max-w-[1200px] mx-auto">
+    <div class="mt-8 p-2 border-t-2 border-[#d8dce4] text-gray-500 text-right max-w-[1200px] mx-auto">
         made with <a href="https://analogjs.org/" class="font-bold text-red-700"><img src="/software/analog.svg" class="size-5 inline-block align-sub"> Analog</a>
         and <a href="https://tailwindcss.com/" class="font-bold text-sky-500"><img src="/software/tailwindcss.svg" class="size-5 inline-block align-sub"> Tailwind</a></div>
 

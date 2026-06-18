@@ -5,8 +5,9 @@ html {
   display: block;
   height: 100%;
   background-color: #ffffff;
-  background-image: radial-gradient(circle, #d8dce4 2px, transparent 1.5px);
+  background-image: radial-gradient(circle, #26365429 2px, transparent 1.5px);
   background-size: 24px 24px;
+  background-position: 0 5px;
   background-repeat: repeat;
   transition: background-color 0.3s ease, background-image 0.3s ease;
 }
@@ -19,12 +20,33 @@ body {
 
 html.dark {
   background-color: #15151e;
-  background-image: radial-gradient(circle, #232338 2px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgba(180, 180, 255, 0.08) 2px, transparent 1.5px);
+  background-size: 24px 24px;
+  background-position: 0 5px;
 }
 
 
 html.dark .border-gray-300 {
-  border-color: #3a3a50 !important;
+  border-color: #232338 !important;
+}
+html.dark .border-\[\#d8dce4\] {
+  border-color: #232338 !important;
+}
+
+/* Wavy divider — matches dot color */
+.wave {
+  height: 24px;
+  background-size: 24px 24px;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M0 12 Q6 0 12 12 T24 12' fill='none' stroke='%23e2e2e2' stroke-width='2.5'/%3E%3C/svg%3E");
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+html.dark .wave {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M0 12 Q6 0 12 12 T24 12' fill='none' stroke='%23232338' stroke-width='2.5'/%3E%3C/svg%3E");
 }
 
 
