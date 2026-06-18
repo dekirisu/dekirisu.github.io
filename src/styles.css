@@ -20,34 +20,6 @@ html.dark {
   background-image: radial-gradient(circle, #232338 2px, transparent 1.5px);
 }
 
-.dark-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 50;
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  border: 3px solid #000;
-  background-color: #fafaff;
-  font-size: 1.25rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-  user-select: none;
-}
-
-.dark-toggle:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.dark-toggle:active {
-  transform: scale(0.95);
-}
 
 html.dark .border-gray-300 {
   border-color: #3a3a50 !important;
