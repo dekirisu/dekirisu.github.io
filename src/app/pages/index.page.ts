@@ -38,7 +38,7 @@ export interface SocialAttributes {
 
      <div class="gap-2 flex justify-center">
       @for (post of socials; track post.attributes.link) {
-        <a href={{post.attributes.link}} class="bg-profile-lite inline-block  rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 transition-all bg-[#fafaff]" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
+        <a href={{post.attributes.link}} class="bg-profile-lite inline-block rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 hover:-translate-y-0.5 active:scale-110 transition-all duration-200 bg-[#fafaff]" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
           <img src="/socials/{{post.attributes.icon}}.svg" class="size-6">         
         </a>
       }
@@ -109,9 +109,15 @@ export interface SocialAttributes {
     </div>
 
 
-    <div class="mt-8 p-2 border-t-2 border-[#d8dce4] text-gray-500 text-right max-w-[1200px] mx-auto">
+    <div class="mt-8 p-2 border-t-2 border-[#d8dce4] text-gray-500 text-right max-w-[1200px] mx-auto relative">
         made with <a href="https://analogjs.org/" class="font-bold text-red-700"><img src="/software/analog.svg" class="size-5 inline-block align-sub"> Analog</a>
-        and <a href="https://tailwindcss.com/" class="font-bold text-sky-500"><img src="/software/tailwindcss.svg" class="size-5 inline-block align-sub"> Tailwind</a></div>
+        and <a href="https://tailwindcss.com/" class="font-bold text-sky-500"><img src="/software/tailwindcss.svg" class="size-5 inline-block align-sub"> Tailwind</a>
+        <span class="crab-wrapper">
+          <span class="crab-text">yo!</span>
+          <input type="checkbox" id="crab-toggle" hidden>
+          <label for="crab-toggle" class="crab-footer" title="click">🦀</label>
+        </span>
+    </div>
 
     <app-project-modal
       [open]="!!selectedProject()"
