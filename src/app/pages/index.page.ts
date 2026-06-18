@@ -53,7 +53,7 @@ export interface SocialAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of devs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
+          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
             
             <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold shadow-sm/30">
               {{post.attributes.title}}
@@ -85,7 +85,7 @@ export interface SocialAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
+          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
             
             <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold shadow-sm/30">
               {{post.attributes.title}}

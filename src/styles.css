@@ -8,11 +8,13 @@ html {
   background-image: radial-gradient(circle, #d8dce4 2px, transparent 1.5px);
   background-size: 24px 24px;
   background-repeat: repeat;
+  transition: background-color 0.3s ease, background-image 0.3s ease;
 }
 
 body {
   display: block;
   height: 100%;
+  transition: color 0.3s ease;
 }
 
 html.dark {
