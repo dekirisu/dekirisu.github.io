@@ -5,6 +5,7 @@ thumbnail: /thumbnails/vscode-theme.png
 description: The VS Code version of the Dekirisu Rust theme. Available on the VS Code Marketplace with full syntax highlighting support for Rust and related languages.
 usage: [visual-studio, https://marketplace.visualstudio.com/items?itemName=dekirisu/dekirisu-rust-themes]
 used: [vscode, json]
+created: 2023-10
 state: released
 category: rustdev
 classes: bg-cover

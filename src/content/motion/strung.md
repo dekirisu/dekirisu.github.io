@@ -6,5 +6,6 @@ description: Animated header banner for the Strung Rust crate — an animation c
 usage: [github, https://github.com/dekirisu/strung]
 #used: [illustrator, after-effects]
 classes: bg-cover
+created: 2023-11
 state: released
 ---

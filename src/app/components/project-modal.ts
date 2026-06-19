@@ -8,6 +8,7 @@ export interface ProjectDetail {
   usage: string[];
   used: string[];
   state?: string;
+  created?: string;
 }
 
 @Component({
@@ -33,6 +34,10 @@ export interface ProjectDetail {
           </div>
           
           <h2 class="modal-title">{{project()?.title}}</h2>
+          
+          @if (project()?.created) {
+            <div class="modal-date">Started: {{project()!.created}}</div>
+          }
           
           <p class="modal-description">{{project()?.description}}</p>
           
@@ -167,7 +172,16 @@ export interface ProjectDetail {
         color: #fff;
       }
 
+      .modal-date {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #666;
+        padding: 4px 24px 12px;
+      }
 
+      html.dark .modal-date {
+        color: #888;
+      }
 
       .modal-description {
         padding: 0 24px 16px;
