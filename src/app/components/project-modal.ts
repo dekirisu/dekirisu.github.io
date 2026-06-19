@@ -338,6 +338,7 @@ export default class ProjectModalComponent {
   private static readonly TECH_MAP: Record<string, { name: string; reason: string }> = {
     analog: { name: 'Analog', reason: 'SSG framework' },
     vite: { name: 'Vite', reason: 'Build tool' },
+    vitepress: { name: 'VitePress', reason: 'Docs site' },
     angular: { name: 'Angular', reason: 'UI framework' },
     tailwindcss: { name: 'Tailwind', reason: 'Utility CSS' },
     bevy: { name: 'Bevy', reason: 'ECS game engine' },

@@ -55,6 +55,7 @@ export interface SocialAttributes {
         <button class="filter-btn {{activeDevFilter() === 'rustdev' ? 'active' : ''}}" (click)="setDevFilter('rustdev')">LibDev</button>
         <button class="filter-btn {{activeDevFilter() === 'gamedev' ? 'active' : ''}}" (click)="setDevFilter('gamedev')">GameDev</button>
         <button class="filter-btn {{activeDevFilter() === 'webdev' ? 'active' : ''}}" (click)="setDevFilter('webdev')">WebDev</button>
+        <button class="filter-btn {{activeDevFilter() === 'other' ? 'active' : ''}}" (click)="setDevFilter('other')">Other</button>
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of filteredDevs; track post.attributes) {
@@ -212,6 +213,7 @@ export default class BlogComponent {
   get filteredDevs() {
     const filter = this.activeDevFilter();
     if (filter === 'all') return this.devs;
+    if (filter === 'other') return this.devs.filter(d => d.attributes.category !== 'rustdev' && d.attributes.category !== 'gamedev' && d.attributes.category !== 'webdev');
     return this.devs.filter(d => d.attributes.category === filter);
   }
 
