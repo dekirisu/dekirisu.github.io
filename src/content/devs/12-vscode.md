@@ -7,6 +7,6 @@ usage: [visual-studio, https://marketplace.visualstudio.com/items?itemName=dekir
 used: [vscode, json]
 created: 2023-10
 state: released
-category: rustdev
+category: other
 classes: bg-cover
 ---
