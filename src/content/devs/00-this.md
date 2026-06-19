@@ -7,5 +7,6 @@ usage: [github, https://github.com/dekirisu/dekirisu.github.io]
 used: [analog ,vite, angular, tailwindcss]
 created: 2025-07
 state: ongoing
+category: webdev
 classes: bg-cover
 ---

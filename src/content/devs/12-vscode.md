@@ -6,5 +6,6 @@ description: The VS Code version of the Dekirisu Rust theme. Available on the VS
 usage: [visual-studio, https://marketplace.visualstudio.com/items?itemName=dekirisu/dekirisu-rust-themes]
 used: [vscode, json]
 state: released
+category: rustdev
 classes: bg-cover
 ---

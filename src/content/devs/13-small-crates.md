@@ -6,5 +6,6 @@ description: A collection of smaller Rust crates — utility libraries, helpers,
 usage: [crates-io, https://crates.io/users/dekirisu?sort=downloads]
 used: [rust]
 state: released
+category: rustdev
 classes: bg-cover
 ---

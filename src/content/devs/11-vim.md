@@ -7,5 +7,6 @@ usage: [github, https://github.com/dekirisu/deki-rust.vim]
 used: [vim]
 created: 2024-07
 state: released
+category: rustdev
 classes: bg-cover
 ---

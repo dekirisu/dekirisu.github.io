@@ -49,10 +49,15 @@ export interface SocialAttributes {
       <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative ">
         <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
         Things I <b class="text-deki-pink">develop</b> by <b class="text-deki-orange">myself</b><b> !</b>
-
       </h3>
+      <div class="flex gap-2 mb-4 flex-wrap">
+        <button class="filter-btn {{activeDevFilter() === 'all' ? 'active' : ''}}" (click)="setDevFilter('all')">All</button>
+        <button class="filter-btn {{activeDevFilter() === 'rustdev' ? 'active' : ''}}" (click)="setDevFilter('rustdev')">LibDev</button>
+        <button class="filter-btn {{activeDevFilter() === 'gamedev' ? 'active' : ''}}" (click)="setDevFilter('gamedev')">GameDev</button>
+        <button class="filter-btn {{activeDevFilter() === 'webdev' ? 'active' : ''}}" (click)="setDevFilter('webdev')">WebDev</button>
+      </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
-        @for (post of devs; track post.attributes) {
+        @for (post of filteredDevs; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
             
             <div class="m-2">
@@ -149,6 +154,42 @@ export interface SocialAttributes {
       (close)="closeProject()"
     />
   `,
+  styles: [`
+    .filter-btn {
+      padding: 4px 12px;
+      border: 2px solid #000;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background-color: #fafaff;
+      color: #000;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      background-color: #ffdba1;
+      transform: translateY(-1px);
+    }
+
+    .filter-btn.active {
+      background-color: #8ad4fb;
+    }
+
+    html.dark .filter-btn {
+      background-color: #2a2a3e;
+      color: #fff;
+    }
+
+    html.dark .filter-btn:hover {
+      background-color: #3a3a50;
+    }
+
+    html.dark .filter-btn.active {
+      background-color: #1a3a5c;
+      border: 3px solid #5a9ad4;
+    }
+  `],
 })
 
 export default class BlogComponent {
@@ -161,6 +202,18 @@ export default class BlogComponent {
   readonly devs = injectContentFiles<PostAttributes>(
     (file) => file.filename.includes('src/content/devs/')
   );
+
+  readonly activeDevFilter = signal<string>('all');
+
+  setDevFilter(filter: string) {
+    this.activeDevFilter.set(filter);
+  }
+
+  get filteredDevs() {
+    const filter = this.activeDevFilter();
+    if (filter === 'all') return this.devs;
+    return this.devs.filter(d => d.attributes.category === filter);
+  }
 
   readonly selectedProject = signal<PostAttributes | null>(null);
 

@@ -8,4 +8,5 @@ export default interface PostAttributes {
   classes: string;
   created?: string;
   state?: string;
+  category?: string;
 }

@@ -6,5 +6,6 @@ description: A cozy 3D game about gathering resources — live flowers, stones, 
 usage: [youtube, https://www.youtube.com/watch?v=neklH0SAObI]
 used: [gimp, photoshop, blender, bevy, rust]
 state: wip
+category: gamedev
 classes: bg-cover
 ---

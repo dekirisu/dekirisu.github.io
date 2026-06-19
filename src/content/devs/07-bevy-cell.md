@@ -7,5 +7,6 @@ usage: [github,https://github.com/dekirisu/bevy_cell]
 used: [bevy, rust]
 created: 2023-08
 state: released
+category: rustdev
 classes: bg-cover
 ---

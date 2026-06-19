@@ -6,6 +6,7 @@ description: Easy access to struct fields directly in string templates. Works wi
 usage: [github, https://github.com/dekirisu/strung]
 used: [rust]
 state: released
+category: rustdev
 classes: bg-cover
 created: 2022-09
 ---

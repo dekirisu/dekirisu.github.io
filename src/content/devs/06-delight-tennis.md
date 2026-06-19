@@ -7,5 +7,6 @@ usage: [youtube, https://www.youtube.com/watch?v=oTbMb3CAXdc]
 used: [gimp ,blender, unity, c-sharp, nodejs]
 created: 2018-07
 state: archive
+category: gamedev
 classes: bg-cover
 ---

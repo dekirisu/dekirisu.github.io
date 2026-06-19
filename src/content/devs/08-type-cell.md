@@ -7,5 +7,6 @@ usage: [github, https://github.com/dekirisu/type_cell]
 used: [rust]
 created: 2023-08
 state: released
+category: rustdev
 classes: bg-cover
 ---

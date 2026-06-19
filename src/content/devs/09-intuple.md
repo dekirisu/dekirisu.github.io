@@ -7,5 +7,6 @@ usage: [github, https://github.com/dekirisu/intuple]
 used: [rust]
 created: 2022-09
 state: released
+category: rustdev
 classes: bg-cover
 ---

@@ -7,5 +7,6 @@ usage: [bluesky, https://bsky.app/profile/dekirisu.com/post/3lbm3ud2lkk2j]
 used: [gimp, bevy, rust]
 created: 2024-06
 state: proto
+category: gamedev
 classes: bg-cover
 ---

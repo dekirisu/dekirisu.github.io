@@ -7,5 +7,6 @@ usage: [github, https://github.com/dekirisu/mevy]
 used: [bevy, rust]
 created: 2025-01
 state: wip
+category: rustdev
 classes: bg-cover
 ---
