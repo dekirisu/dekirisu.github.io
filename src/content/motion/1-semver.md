@@ -6,4 +6,6 @@ description: "Animated banner celebrating cargo-semver-checks v0.44 : the Rust t
 usage: [github, https://github.com/obi1kenobi/cargo-semver-checks/releases/tag/v0.44.0]
 #used: [illustrator, after-effects]
 classes: bg-cover
+created: 2025-09
+state: released
 ---

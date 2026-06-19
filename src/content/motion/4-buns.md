@@ -6,4 +6,6 @@ description: "Animated header for Buns : a Rust crate for creating simple code t
 usage: [github, https://github.com/dekirisu/buns]
 #used: [illustrator, after-effects]
 classes: bg-cover
+created: 2024-11
+state: released
 ---

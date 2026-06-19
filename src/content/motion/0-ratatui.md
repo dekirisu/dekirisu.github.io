@@ -6,4 +6,6 @@ description: "Animated banner celebrating Ratatui v0.29 : the powerful Rust term
 usage: [link, https://ratatui.rs/highlights/v029/]
 #used: [illustrator, after-effects]
 classes: bg-cover
+created: 2024-10
+state: released
 ---

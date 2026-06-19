@@ -7,6 +7,7 @@ export interface ProjectDetail {
   description: string;
   usage: string[];
   used: string[];
+  state?: string;
 }
 
 @Component({
@@ -21,7 +22,14 @@ export interface ProjectDetail {
           <button class="modal-close" (click)="close.emit()">✕</button>
           
           <div class="modal-header">
-            <img [src]="project()?.thumbnail" class="modal-thumbnail" alt="{{project()?.title}}"/>
+            <div class="relative inline-block">
+              <img [src]="project()?.thumbnail" class="modal-thumbnail" alt="{{project()?.title}}"/>
+              @if (project()?.state) {
+                <div [class]="stateClass(project()!.state!)" class="absolute top-[-8px] left-[-8px]">
+                  {{stateInfo(project()!.state!).label}}
+                </div>
+              }
+            </div>
           </div>
           
           <h2 class="modal-title">{{project()?.title}}</h2>
@@ -130,6 +138,7 @@ export interface ProjectDetail {
         justify-content: center;
         align-items: center;
         padding: 24px 24px 0;
+        position: relative;
       }
 
       .modal-thumbnail {
@@ -158,6 +167,8 @@ export interface ProjectDetail {
         color: #fff;
       }
 
+
+
       .modal-description {
         padding: 0 24px 16px;
         margin: 0;
@@ -171,7 +182,15 @@ export interface ProjectDetail {
       }
 
       .modal-links {
+        display: flex;
+        align-items: stretch;
+        gap: 8px;
         padding: 0 24px 16px;
+      }
+
+      .modal-state {
+        display: inline-block !important;
+        min-height: 34px;
       }
 
       .modal-link {
@@ -334,6 +353,24 @@ export default class ProjectModalComponent {
 
   techInfo(tech: string): { name: string; reason: string } | undefined {
     return ProjectModalComponent.TECH_MAP[tech];
+  }
+
+  stateInfo(state: string): { label: string; bg: string; text: string } {
+    const info: Record<string, { label: string; bg: string; text: string }> = {
+      wip: { label: 'WIP', bg: 'bg-deki-orange', text: 'text-black' },
+      proto: { label: 'Prototype', bg: 'bg-deki-blue', text: 'text-black' },
+      released: { label: 'Released', bg: 'bg-[#d65a8f]', text: 'text-white' },
+      concept: { label: 'Concept', bg: 'bg-gray-300', text: 'text-black' },
+      archive: { label: 'Archived', bg: 'bg-gray-500', text: 'text-white' },
+      ongoing: { label: 'Ongoing', bg: 'bg-green-400', text: 'text-black' },
+    };
+    const s = info[state];
+    return s ?? { label: state.toUpperCase(), bg: 'bg-gray-500', text: 'text-white' };
+  }
+
+  stateClass(state: string): string {
+    const { bg, text } = this.stateInfo(state);
+    return bg + ' border-2 border-black rounded-lg ' + text + ' font-bold px-3 py-[10px] shadow-sm/30 w-fit text-xs uppercase tracking-wider leading-none flex items-center';
   }
 
   @HostListener('document:keydown.escape')

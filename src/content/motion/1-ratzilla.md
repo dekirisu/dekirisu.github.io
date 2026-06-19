@@ -6,4 +6,6 @@ description: "Animated header for Ratzilla : terminal-themed web apps built with
 usage: [github, https://github.com/orhun/ratzilla]
 classes: bg-cover
 #used: [illustrator, after-effects]
+created: 2025-02
+state: released
 ---

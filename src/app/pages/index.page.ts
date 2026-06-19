@@ -55,9 +55,21 @@ export interface SocialAttributes {
         @for (post of devs; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
             
-            <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold shadow-sm/30">
-              {{post.attributes.title}}
+            <div class="m-2">
+              <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
+                {{post.attributes.title}}
+              </div>
+              @if (post.attributes.state) {
+                <div [class]="stateClass(post.attributes.state)">
+                  {{stateInfo(post.attributes.state).label}}
+                </div>
+              }
             </div>
+            @if (post.attributes.created) {
+              <div class="absolute left-2 bottom-2 bg-deki-blue border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs">
+                {{post.attributes.created}}
+              </div>
+            }
 
             <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
@@ -87,9 +99,21 @@ export interface SocialAttributes {
         @for (post of motions; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
             
-            <div class="bg-white border-2 rounded-md text-black m-2 inline-block px-2 font-bold shadow-sm/30">
-              {{post.attributes.title}}
+            <div class="m-2">
+              <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
+                {{post.attributes.title}}
+              </div>
+              @if (post.attributes.state) {
+                <div [class]="stateClass(post.attributes.state)">
+                  {{stateInfo(post.attributes.state).label}}
+                </div>
+              }
             </div>
+            @if (post.attributes.created) {
+              <div class="absolute left-2 bottom-2 bg-deki-blue border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs">
+                {{post.attributes.created}}
+              </div>
+            }
 
             <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
@@ -146,6 +170,24 @@ export default class BlogComponent {
 
   closeProject() {
     this.selectedProject.set(null);
+  }
+
+  stateInfo(state: string): { label: string; bg: string; text: string } {
+    const info: Record<string, { label: string; bg: string; text: string }> = {
+      wip: { label: 'WIP', bg: 'bg-deki-orange', text: 'text-black' },
+      proto: { label: 'Prototype', bg: 'bg-deki-blue', text: 'text-black' },
+      released: { label: 'Released', bg: 'bg-[#d65a8f]', text: 'text-white' },
+      concept: { label: 'Concept', bg: 'bg-gray-300', text: 'text-black' },
+      archive: { label: 'Archived', bg: 'bg-gray-500', text: 'text-white' },
+      ongoing: { label: 'Ongoing', bg: 'bg-green-400', text: 'text-black' },
+    };
+    const s = info[state];
+    return s ?? { label: state.toUpperCase(), bg: 'bg-gray-500', text: 'text-white' };
+  }
+
+  stateClass(state: string): string {
+    const { bg, text } = this.stateInfo(state);
+    return bg + ' border-2 border-black rounded-md ' + text + ' font-bold px-2 py-0.5 mt-1 block shadow-sm/30 w-fit text-xs uppercase tracking-wider';
   }
 }
 

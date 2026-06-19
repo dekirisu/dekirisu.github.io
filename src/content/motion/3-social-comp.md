@@ -6,4 +6,6 @@ description: "A cute animated social media border design : cozy pixel-art style 
 usage: [bluesky, https://bsky.app/profile/dekirisu.com/post/3lcujvcoyrc2l]
 #used: [illustrator, after-effects]
 classes: bg-contain
+created: 2024-12
+state: released
 ---

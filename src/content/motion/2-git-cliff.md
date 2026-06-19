@@ -6,4 +6,6 @@ description: "Animated header for Git-Cliff : a highly customizable changelog ge
 usage: [github, https://github.com/orhun/git-cliff]
 classes: bg-cover
 #used: [illustrator, after-effects]
+created: 2023-12
+state: released
 ---

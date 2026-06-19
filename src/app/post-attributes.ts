@@ -6,4 +6,6 @@ export default interface PostAttributes {
   usage: string[];
   used: string[];
   classes: string;
+  created?: string;
+  state?: string;
 }

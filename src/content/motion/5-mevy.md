@@ -6,4 +6,6 @@ description: "Animated header for Mevy : a set of macros adding 'witchcraft' to 
 usage: [github, https://github.com/dekirisu/mevy]
 #used: [illustrator, after-effects]
 classes: bg-cover
+created: 2025-01
+state: released
 ---

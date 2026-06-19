@@ -6,4 +6,5 @@ description: "Animated header for bevy_cell : a Rust crate that attaches Bevy ha
 usage: [github, https://github.com/dekirisu/bevy_cell]
 #used: [illustrator, after-effects]
 classes: bg-cover
+state: released
 ---
