@@ -6,7 +6,7 @@ description: A cozy racing game with a retro-futuristic aesthetic. Features cust
 usage: [youtube,https://www.youtube.com/watch?v=ca9O60szPTg]
 used: [gimp, photoshop, blender, bevy, rust]
 created: 2024-09
-state: wip
+state: paused
 category: gamedev
 classes: bg-cover
 ---

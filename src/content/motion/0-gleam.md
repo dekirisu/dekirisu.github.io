@@ -1,5 +1,5 @@
 ---
-title: Gleam (for fun)
+title: ..for fun (Gleam)
 slug: gleam-header
 thumbnail: /thumbnails/gleam.webp
 description: "A cute 2D animated header for the Gleam programming language : the friendly, type-safe language that compiles to Erlang."

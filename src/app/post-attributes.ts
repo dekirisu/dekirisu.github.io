@@ -9,4 +9,5 @@ export default interface PostAttributes {
   created?: string;
   state?: string;
   category?: string;
+  hidden?: boolean;
 }

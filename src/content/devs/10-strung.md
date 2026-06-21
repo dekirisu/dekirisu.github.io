@@ -1,7 +1,7 @@
 ---
 title: Own String Handling
 slug: strung
-thumbnail: /thumbnails/strung.png
+thumbnail: /thumbnails/strung.webp
 description: Easy access to struct fields directly in string templates. Works with named and unnamed fields, supports cascading (recursive) interpolation, and ignore markers — like template literals for Rust structs.
 usage: [github, https://github.com/dekirisu/strung]
 used: [rust]

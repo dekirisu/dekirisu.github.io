@@ -1,5 +1,5 @@
 ---
-title: Semver Checks v0.44
+title: ..for Semver Checks v0.44
 slug: semver-header
 thumbnail: /thumbnails/semver.webp
 description: "Animated banner celebrating cargo-semver-checks v0.44 : the Rust tool that scans crates for semver-breaking changes."

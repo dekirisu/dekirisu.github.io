@@ -1,5 +1,5 @@
 ---
-title: Ratzilla | Header
+title: ..for Ratzilla
 slug: ratzilla-header
 thumbnail: /thumbnails/ratzilla.webp
 description: "Animated header for Ratzilla : terminal-themed web apps built with Rust, WebAssembly, and Ratatui. A cozy homage to retro terminals."

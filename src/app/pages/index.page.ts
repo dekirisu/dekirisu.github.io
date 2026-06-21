@@ -131,7 +131,7 @@ export interface PageAttributes {
       <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
       <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative">
         <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
-        Things I <b class="text-deki-pink">animated</b> by <b class="text-deki-orange">myself</b><b> !</b>
+        Things I <b class="text-deki-pink">animated</b> <b class="text-deki-orange">..</b>
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
@@ -231,7 +231,7 @@ export default class BlogComponent {
     (file) => file.filename.includes('/src/content/socials/')
   );
   readonly motions = injectContentFiles<PostAttributes>(
-    (file) => file.filename.includes('src/content/motion/')
+    (file) => file.filename.includes('src/content/motion/') && !file.attributes.hidden
   );
   readonly devs = injectContentFiles<PostAttributes>(
     (file) => file.filename.includes('src/content/devs/')
@@ -265,11 +265,12 @@ export default class BlogComponent {
 
   stateInfo(state: string): { label: string; bg: string; text: string } {
     const info: Record<string, { label: string; bg: string; text: string }> = {
-      wip: { label: 'WIP', bg: 'bg-[#d65a8f]', text: 'text-white' },
-      proto: { label: 'Prototype', bg: 'bg-deki-orange', text: 'text-black' },
+      wip: { label: 'WIP', bg: 'bg-green-300', text: 'text-black' },
+      proto: { label: 'Prototype', bg: 'bg-[#a8a0d4]', text: 'text-black' },
       released: { label: 'Released', bg: 'bg-deki-blue', text: 'text-black' },
       concept: { label: 'Concept', bg: 'bg-gray-300', text: 'text-black' },
       archive: { label: 'Archived', bg: 'bg-gray-500', text: 'text-white' },
+      paused: { label: 'Paused', bg: 'bg-gray-500', text: 'text-white' },
       ongoing: { label: 'Ongoing', bg: 'bg-green-300', text: 'text-black' },
     };
     const s = info[state];
