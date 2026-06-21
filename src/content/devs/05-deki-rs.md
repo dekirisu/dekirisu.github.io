@@ -1,5 +1,5 @@
 ---
-title: Dekirisu Rust
+title: My Rust Utility
 slug: deki-rs
 thumbnail: /thumbnails/deki-rs.png
 description: A collection of Rust utilities and helpers — personal crates and experiments.
