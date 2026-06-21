@@ -46,7 +46,7 @@ export interface PageAttributes {
 
      <div class="gap-2 flex justify-center">
       @for (post of socials; track post.attributes.link) {
-        <a href={{post.attributes.link}} class="bg-profile-lite inline-block rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 hover:-translate-y-0.5 active:scale-110 transition-all duration-200 bg-[#fafaff]" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
+        <a href={{post.attributes.link}} target="_blank" class="bg-profile-lite inline-block rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 hover:-translate-y-0.5 active:scale-110 transition-all duration-200 bg-[#fafaff]" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
           <img src="/socials/{{post.attributes.icon}}.svg" class="size-6">         
         </a>
       }
@@ -103,7 +103,7 @@ export interface PageAttributes {
               }
             </div>
 
-            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" target="_blank" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="$event.stopPropagation()">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
@@ -148,7 +148,7 @@ export interface PageAttributes {
               }
             </div>
 
-            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" target="_blank" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="$event.stopPropagation()">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
@@ -173,8 +173,8 @@ export interface PageAttributes {
 
 
     <div class="mt-8 p-2 border-t-2 border-[#d8dce4] text-gray-500 text-right max-w-[1200px] mx-auto relative">
-        made with <a href="https://analogjs.org/" class="font-bold text-red-700"><img src="/software/analog.svg" class="size-5 inline-block align-sub"> Analog</a>
-        and <a href="https://tailwindcss.com/" class="font-bold text-sky-500"><img src="/software/tailwindcss.svg" class="size-5 inline-block align-sub"> Tailwind</a>
+        made with <a href="https://analogjs.org/" target="_blank" class="font-bold text-red-700"><img src="/software/analog.svg" class="size-5 inline-block align-sub"> Analog</a>
+        and <a href="https://tailwindcss.com/" target="_blank" class="font-bold text-sky-500"><img src="/software/tailwindcss.svg" class="size-5 inline-block align-sub"> Tailwind</a>
         <span class="crab-wrapper">
           <span class="crab-text">yo!</span>
           <input type="checkbox" id="crab-toggle" hidden>
