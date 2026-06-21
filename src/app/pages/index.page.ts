@@ -56,7 +56,7 @@ export interface PageAttributes {
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         @for (post of pages; track post.attributes.slug) {
           <a href="{{post.attributes.url}}" target="_blank" class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" title="{{post.attributes.title}}">
-            <img src="{{post.attributes.thumbnail}}" class="absolute inset-0 w-full h-full object-cover rounded-xl"/>
+            <img src="{{post.attributes.thumbnail}}" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="absolute inset-0 bg-black/50"></div>
             <div class="relative m-2">
               <div class="bg-white border-2 rounded-md text-black inline-block px-3 py-1 font-bold shadow-sm/30">
@@ -90,9 +90,9 @@ export interface PageAttributes {
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of filteredDevs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
-            
-            <div class="m-2">
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" (click)="openProject(post.attributes)" >
+            <img [src]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
+            <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
                 {{post.attributes.title}}
               </div>
@@ -135,9 +135,9 @@ export interface PageAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image:url({{post.attributes.thumbnail}})" class={{post.attributes.classes}} (click)="openProject(post.attributes)" >
-            
-            <div class="m-2">
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" (click)="openProject(post.attributes)" >
+            <img [src]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
+            <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
                 {{post.attributes.title}}
               </div>
@@ -189,6 +189,15 @@ export interface PageAttributes {
     />
   `,
   styles: [`
+    .lazy-img {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .lazy-img.loaded {
+      opacity: 1;
+    }
+
     .filter-btn {
       padding: 4px 12px;
       border: 2px solid #000;
