@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="74 100 363 412">
+  <polygon fill="#f0d000" stroke="#000" stroke-width="10" stroke-linejoin="round" points="437.367,100.62 404.321,470.819 255.778,512 107.644,470.877 74.633,100.62"/>
+  <polygon fill="#dfc000" stroke="#dfc000" stroke-width="10" stroke-linejoin="round" points="376.03,447.246 404.27,130.894 256,130.894 256,480.523"/>
+  <text x="256" y="350" font-family="Arial, sans-serif" font-size="200" font-weight="bold" fill="#000" text-anchor="middle">JS</text>
+</svg>

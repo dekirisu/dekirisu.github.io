@@ -364,6 +364,9 @@ export default class ProjectModalComponent {
     email: { name: 'Email', reason: 'Contact' },
     link: { name: 'Link', reason: 'External' },
     visual_studio: { name: 'VS Marketplace', reason: 'Extensions' },
+    html: { name: 'HTML', reason: 'Markup' },
+    css: { name: 'CSS', reason: 'Styling' },
+    js: { name: 'JavaScript', reason: 'Scripting' },
   };
 
   techInfo(tech: string): { name: string; reason: string } | undefined {
