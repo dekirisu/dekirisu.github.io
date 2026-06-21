@@ -10,6 +10,14 @@ export interface SocialAttributes {
   link: string;
 }
 
+export interface PageAttributes {
+  slug: string;
+  thumbnail: string;
+  title: string;
+  description: string;
+  url: string;
+}
+
 @Component({
   selector: 'app-blog',
   imports: [RouterLink, ProjectModal],
@@ -44,6 +52,29 @@ export interface SocialAttributes {
       }
     </div>
 
+    <div class="p-5 pb-0 max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8">
+      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        @for (post of pages; track post.attributes.slug) {
+          <a href="{{post.attributes.url}}" target="_blank" class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" title="{{post.attributes.title}}">
+            <img src="{{post.attributes.thumbnail}}" class="absolute inset-0 w-full h-full object-cover rounded-xl"/>
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative m-2">
+              <div class="bg-white border-2 rounded-md text-black inline-block px-3 py-1 font-bold shadow-sm/30">
+                {{post.attributes.title}}
+              </div>
+              <div class="text-white font-bold text-sm mt-1 max-w-[175px] leading-tight" style="margin-left: 6px; text-shadow: 0 0 4px #000, 0 0 16px #000, 0 0 24px #000;">
+                {{post.attributes.description}}
+              </div>
+            </div>
+            <div class="absolute right-2 bottom-2 bg-deki-orange border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs flex items-center gap-1">
+              <span class="text-sm">→</span>
+              <span>explore</span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+
      <div class="p-5  max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8 text-left">
       <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
       <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative ">
@@ -71,15 +102,16 @@ export interface SocialAttributes {
                 </div>
               }
             </div>
-            @if (post.attributes.created) {
-              <div class="absolute left-2 bottom-2 bg-deki-blue border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs">
-                {{post.attributes.created}}
-              </div>
-            }
 
             <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
+
+            @if (post.attributes.created) {
+              <div class="absolute right-2 bottom-13 bg-deki-blue border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs">
+                {{post.attributes.created}}
+              </div>
+            }
 
             <div class="p-1 gap-1 flex absolute bottom-1 right-1">
               @for (usd of post.attributes.used; track usd) {
@@ -115,15 +147,16 @@ export interface SocialAttributes {
                 </div>
               }
             </div>
-            @if (post.attributes.created) {
-              <div class="absolute left-2 bottom-2 bg-deki-blue border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs">
-                {{post.attributes.created}}
-              </div>
-            }
 
             <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
+
+            @if (post.attributes.created) {
+              <div class="absolute right-2 bottom-2 bg-deki-blue border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs">
+                {{post.attributes.created}}
+              </div>
+            }
 
             <div class="p-1 gap-1 flex absolute bottom-1 right-1">
               @for (usd of post.attributes.used; track usd) {
@@ -203,6 +236,9 @@ export default class BlogComponent {
   readonly devs = injectContentFiles<PostAttributes>(
     (file) => file.filename.includes('src/content/devs/')
   );
+  readonly pages = injectContentFiles<PageAttributes>(
+    (file) => file.filename.includes('src/content/pages/')
+  );
 
   readonly activeDevFilter = signal<string>('all');
 
@@ -229,12 +265,12 @@ export default class BlogComponent {
 
   stateInfo(state: string): { label: string; bg: string; text: string } {
     const info: Record<string, { label: string; bg: string; text: string }> = {
-      wip: { label: 'WIP', bg: 'bg-deki-orange', text: 'text-black' },
-      proto: { label: 'Prototype', bg: 'bg-deki-blue', text: 'text-black' },
-      released: { label: 'Released', bg: 'bg-[#d65a8f]', text: 'text-white' },
+      wip: { label: 'WIP', bg: 'bg-[#d65a8f]', text: 'text-white' },
+      proto: { label: 'Prototype', bg: 'bg-deki-orange', text: 'text-black' },
+      released: { label: 'Released', bg: 'bg-deki-blue', text: 'text-black' },
       concept: { label: 'Concept', bg: 'bg-gray-300', text: 'text-black' },
       archive: { label: 'Archived', bg: 'bg-gray-500', text: 'text-white' },
-      ongoing: { label: 'Ongoing', bg: 'bg-green-400', text: 'text-black' },
+      ongoing: { label: 'Ongoing', bg: 'bg-green-300', text: 'text-black' },
     };
     const s = info[state];
     return s ?? { label: state.toUpperCase(), bg: 'bg-gray-500', text: 'text-white' };
