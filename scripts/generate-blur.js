@@ -7,10 +7,26 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const thumbsDir = path.resolve(__dirname, '../public/thumbnails');
 const outputDir = path.resolve(__dirname, '../public/thumbnails/blurred');
+const profileSrc = path.resolve(__dirname, '../public/profile.jpg');
 
 fs.mkdirSync(outputDir, { recursive: true });
 
 const files = fs.readdirSync(thumbsDir).filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
+
+// Also blur profile.jpg
+const profileOutput = path.join(outputDir, 'profile.png');
+sharp(profileSrc)
+  .resize(null, 24)
+  .toFile(profileOutput)
+  .then(() => {
+    execSync(`pngquant --quality=2 --speed=1 --force "${profileOutput}"`);
+    const quantized = profileOutput.replace(/\.png$/, '-fs8.png');
+    if (quantized !== profileOutput) {
+      fs.renameSync(quantized, profileOutput);
+    }
+    console.log(`✓ profile.jpg → profile.png`);
+  })
+  .catch(err => console.error(`✗ profile.jpg: ${err.message}`));
 
 for (const file of files) {
   const input = path.join(thumbsDir, file);

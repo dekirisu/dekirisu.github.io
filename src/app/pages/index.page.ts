@@ -33,7 +33,9 @@ export interface PageAttributes {
 
         <div class="mb-6">
             <div class="p-3 pb-1 bg-white rounded-xl border-2 border-black shadow-sm/20 shrink-0 bg-profile relative inline-block" id="profile-container" style="overflow: visible; will-change: transform;">
-                <img class="size-28 border-2 border-black rounded-md shadow-sm/20 cursor-pointer" src="profile.jpg" id="profile-img" onclick="blockDamage()" title="click to block"/>
+                <div class="size-28 border-2 border-black rounded-md shadow-sm/20 relative overflow-hidden" style="background-image: url('/thumbnails/blurred/profile.png'); background-size: cover; background-position: center; image-rendering: pixelated;">
+                    <img class="size-28 cursor-pointer absolute inset-0 lazy-img" src="profile.jpg" id="profile-img" onload="this.classList.add('loaded')" onclick="blockDamage()" title="click to block"/>
+                </div>
                 <div class="text-2xl py-1 text-center font-bold text-shadow-xs/20">Dekirisu</div>
             </div>
             <div class="bg-terminal text-white px-4 py-2 rounded-lg font-bold shadow-sm/30 w-40 text-lg inline-block relative align-top top-5 ml-2">
@@ -245,6 +247,7 @@ export default class BlogComponent {
         const thumb = img.getAttribute('data-thumb');
         if (thumb) img.src = thumb;
       });
+
     });
   }
 
