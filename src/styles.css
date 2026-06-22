@@ -129,6 +129,119 @@ html.dark .border-\[\#d8dce4\] {
   border-color: #232338 !important;
 }
 
+html.rtx-off .lazy-img {
+  display: none !important;
+}
+
+#rtx-toggle-btn {
+  transition: all 0.2s ease;
+}
+
+#rtx-toggle-btn:hover {
+  background-color: #ffdba1;
+}
+
+#rtx-toggle-btn.rtx-on:hover {
+  background-color: #8ad4fb;
+}
+
+#rtx-toggle-btn.rtx-off:hover {
+  background-color: #ffdba1;
+}
+
+html.dark #rtx-toggle-btn {
+  background-color: #fafaff !important;
+  color: #000 !important;
+}
+
+html.dark #rtx-toggle-btn:hover {
+  background-color: #ffdba1 !important;
+}
+
+html.dark #rtx-toggle-btn.rtx-on:hover {
+  background-color: #8ad4fb !important;
+}
+
+html.dark #rtx-toggle-btn.rtx-off {
+  background-color: #cf5f5f !important;
+  color: #fff !important;
+  border-color: #000;
+}
+
+html.dark #rtx-toggle-btn.rtx-off:hover {
+  background-color: #b84e4e !important;
+}
+
+#rtx-toggle-btn .rtx-knob {
+  transition: left 0.2s ease, background 0.2s ease;
+  background-color: #8ad4fb;
+}
+
+#rtx-toggle-btn .rtx-lane {
+  background-color: #d8dce4;
+  transition: background-color 0.2s ease;
+}
+
+#rtx-toggle-btn.rtx-on .rtx-lane {
+  background-color: #8ad4fb;
+}
+
+#rtx-toggle-btn.rtx-on .rtx-knob {
+  background-color: #5a9ad4;
+}
+
+#rtx-toggle-btn.rtx-off .rtx-lane {
+  background-color: #d8dce4;
+}
+
+#rtx-toggle-btn.rtx-off .rtx-knob {
+  background-color: #666;
+}
+
+html.dark #rtx-toggle-btn .rtx-lane {
+  background-color: #d8dce4;
+}
+
+html.dark #rtx-toggle-btn.rtx-on .rtx-lane {
+  background-color: #8ad4fb;
+}
+
+html.dark #rtx-toggle-btn.rtx-off .rtx-lane {
+  background-color: #d8dce4;
+}
+
+#rtx-toggle-btn.rtx-off {
+  animation: rtx-float 3s ease-in-out infinite;
+  background-color: #e06666 !important;
+  border-color: #000;
+  color: #fff;
+}
+
+#rtx-toggle-btn.rtx-off .rtx-knob {
+  background-color: #000;
+}
+
+#rtx-toggle-btn.rtx-off .rtx-lane {
+  background-color: #fff;
+}
+
+#rtx-toggle-btn.rtx-off:hover {
+  animation: none;
+  background-color: #d05555 !important;
+  color: #fff;
+}
+
+@keyframes rtx-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes rtx-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(3deg); }
+  75% { transform: translateY(5px) rotate(-3deg); }
+}
+
 /* Wavy divider — matches dot color */
 .wave {
   height: 24px;

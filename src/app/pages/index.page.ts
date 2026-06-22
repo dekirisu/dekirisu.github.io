@@ -239,6 +239,8 @@ export default class BlogComponent {
   constructor() {
     afterNextRender(() => {
       if (typeof window === 'undefined') return;
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('rtx') === 'off') return;
       document.querySelectorAll<HTMLImageElement>('.lazy-img').forEach(img => {
         const thumb = img.getAttribute('data-thumb');
         if (thumb) img.src = thumb;
