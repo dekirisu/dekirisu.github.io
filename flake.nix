@@ -21,6 +21,7 @@
       name = "portfolio";
       packages = with pkgs; [
         nodejs_22
+        pngquant
       ];
 
       shellHook = ''

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, afterNextRender } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { injectContentFiles } from '@analogjs/content';
 
@@ -55,8 +55,8 @@ export interface PageAttributes {
     <div class="p-5 pb-0 max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8">
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         @for (post of pages; track post.attributes.slug) {
-          <a href="{{post.attributes.url}}" target="_blank" class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" title="{{post.attributes.title}}">
-            <img src="{{post.attributes.thumbnail}}" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
+          <a href="{{post.attributes.url}}" target="_blank" class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center;" title="{{post.attributes.title}}">
+            <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="absolute inset-0 bg-black/50"></div>
             <div class="relative m-2">
               <div class="bg-white border-2 rounded-md text-black inline-block px-3 py-1 font-bold shadow-sm/30">
@@ -90,8 +90,8 @@ export interface PageAttributes {
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of filteredDevs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" (click)="openProject(post.attributes)" >
-            <img [src]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+            <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
                 {{post.attributes.title}}
@@ -135,8 +135,8 @@ export interface PageAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" (click)="openProject(post.attributes)" >
-            <img [src]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+            <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
                 {{post.attributes.title}}
@@ -236,6 +236,16 @@ export interface PageAttributes {
 })
 
 export default class BlogComponent {
+  constructor() {
+    afterNextRender(() => {
+      if (typeof window === 'undefined') return;
+      document.querySelectorAll<HTMLImageElement>('.lazy-img').forEach(img => {
+        const thumb = img.getAttribute('data-thumb');
+        if (thumb) img.src = thumb;
+      });
+    });
+  }
+
   readonly socials = injectContentFiles<SocialAttributes>(
     (file) => file.filename.includes('/src/content/socials/')
   );
@@ -289,6 +299,11 @@ export default class BlogComponent {
   stateClass(state: string): string {
     const { bg, text } = this.stateInfo(state);
     return bg + ' border-2 border-black rounded-md ' + text + ' font-bold px-2 py-0.5 mt-1 block shadow-sm/30 w-fit text-xs uppercase tracking-wider';
+  }
+
+  blurUrl(thumbnail: string): string {
+    const name = thumbnail.split('/').pop()!;
+    return '/thumbnails/blurred/' + name.replace(/\.[^.]+$/, '.png');
   }
 }
 
