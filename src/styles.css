@@ -25,6 +25,10 @@ html.dark {
   background-position: 0 5px;
 }
 
+#blur-profile-img {
+  transition: filter 0.5s ease;
+}
+
 /* Damage taken animation */
 @keyframes damage-shake {
   0%, 100% { transform: translateX(0) rotate(0); }

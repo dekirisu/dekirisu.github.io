@@ -72,10 +72,17 @@
       }
     </script>
     <script>
+      var _g = 0;
       function damageProfile() {
-        var img = document.getElementById('profile-img');
+        var img = document.getElementById('blur-profile-img');
+        img.classList.remove('damage-shake');
+        void img.getBoundingClientRect();
         img.classList.add('damage-shake');
-        setTimeout(function() { img.classList.remove('damage-shake'); }, 500);
+        _g++;
+        var gc = _g;
+        img.addEventListener('animationend', function handler() {
+          if (gc === _g) { img.classList.remove('damage-shake'); img.removeEventListener('animationend', handler); }
+        });
         var popup = document.createElement('div');
         popup.className = 'damage-popup';
         popup.textContent = '-1';
@@ -91,9 +98,15 @@
         }, 900);
       }
       function blockDamage() {
-        var img = document.getElementById('profile-img');
+        var img = document.getElementById('blur-profile-img');
+        img.classList.remove('block-flash');
+        void img.getBoundingClientRect();
         img.classList.add('block-flash');
-        setTimeout(function() { img.classList.remove('block-flash'); }, 400);
+        _g++;
+        var gc = _g;
+        img.addEventListener('animationend', function handler() {
+          if (gc === _g) { img.classList.remove('block-flash'); img.removeEventListener('animationend', handler); }
+        });
         var popup = document.createElement('div');
         popup.className = 'block-popup';
         popup.textContent = 'BLOCK';
