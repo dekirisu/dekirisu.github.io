@@ -18,9 +18,6 @@ export default defineConfig(({ mode }) => ({
       content: {
         highlighter: 'shiki',
       },
-      prerender: {
-          routes: [{route:'/', staticData:true}],
-      },
     }),
     tailwindcss()
   ],
