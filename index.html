@@ -8,41 +8,7 @@
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/src/styles.css" />
-  </head>
-  <body>
-    <button class="fixed top-4 right-[72px] z-50 w-12 h-12 rounded-2xl border-2 border-black bg-[#fafaff] flex flex-col items-center justify-between py-2 shadow-sm/30 hover:scale-[1.1] hover:rotate-5 active:scale-[0.95] transition-all cursor-pointer select-none" onclick="toggleRTX()" title="Toggle RTX" id="rtx-toggle-btn">
-      <span class="font-bold text-[0.8rem] leading-none !text-black">RTX</span>
-      <span class="w-6 h-3 rounded-full relative flex items-center rtx-lane"><span class="rtx-knob w-2.5 h-2.5 rounded-full absolute left-0.5 transition-all"></span></span>
-    </button>
-    <button class="fixed top-4 right-4 z-50 w-12 h-12 rounded-2xl border-2 border-black bg-[#fafaff] text-[1.25rem] flex items-center justify-center shadow-sm/30 hover:scale-[1.1] hover:rotate-5 active:scale-[0.95] transition-all cursor-pointer select-none !text-black" onclick="toggleDark(); this.innerHTML = document.documentElement.classList.contains('dark') ? getSunIcon() : getMoonIcon()" title="Toggle dark mode" id="dark-toggle-btn"></button>
-    <app-root></app-root>
-    <script>
-      (function() {
-        var saved = localStorage.getItem('dark-mode');
-        if (saved === 'true') {
-          document.documentElement.classList.add('dark');
-        }
-        var rtx = new URLSearchParams(window.location.search).get('rtx');
-        if (rtx === 'off') {
-          document.documentElement.classList.add('rtx-off');
-        }
-        var btn = document.getElementById('dark-toggle-btn');
-        btn.innerHTML = document.documentElement.classList.contains('dark')
-          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="currentColor" stroke="none"/><path d="M12 2.5v2M12 19.5v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2.5 12h2M19.5 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
-          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-        var rtxBtn = document.getElementById('rtx-toggle-btn');
-        var isOn = new URLSearchParams(window.location.search).get('rtx') !== 'off';
-        if (isOn) {
-          rtxBtn.classList.add('rtx-on');
-          rtxBtn.classList.remove('rtx-off');
-          rtxBtn.querySelector('.rtx-knob').style.left = '14px';
-        } else {
-          rtxBtn.classList.add('rtx-off');
-          rtxBtn.classList.remove('rtx-on');
-          rtxBtn.querySelector('.rtx-knob').style.left = '2px';
-        }
-      })();
-    </script>
+    <script type="module" src="/src/main.ts"></script>
     <script>
       function toggleDark() {
         document.documentElement.classList.toggle('dark');
@@ -55,7 +21,7 @@
         }
       });
       function getSunIcon() {
-        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="#000" stroke="none"/><path d="M12 2.5v2M12 19.5v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2.5 12h2M19.5 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="#000" stroke="none"/><path d="M12 2.5v2M12 19.5v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2.5 12h2M19.5 12h2M4.22 19.78l1.42 1.42M18.36 5.64l1.42 1.42"/></svg>';
       }
       function getMoonIcon() {
         return '<svg width="20" height="20" viewBox="0 0 24 24" fill="#000"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
@@ -130,6 +96,40 @@
         }, 800);
       }
     </script>
-    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <button class="fixed top-4 right-[72px] z-50 w-12 h-12 rounded-2xl border-2 border-black bg-[#fafaff] flex flex-col items-center justify-between py-2 shadow-sm/30 hover:scale-[1.1] hover:rotate-5 active:scale-[0.95] transition-all cursor-pointer select-none" onclick="toggleRTX()" title="Toggle RTX" id="rtx-toggle-btn">
+      <span class="font-bold text-[0.8rem] leading-none !text-black">RTX</span>
+      <span class="w-6 h-3 rounded-full relative flex items-center rtx-lane"><span class="rtx-knob w-2.5 h-2.5 rounded-full absolute left-0.5 transition-all"></span></span>
+    </button>
+    <button class="fixed top-4 right-4 z-50 w-12 h-12 rounded-2xl border-2 border-black bg-[#fafaff] text-[1.25rem] flex items-center justify-center shadow-sm/30 hover:scale-[1.1] hover:rotate-5 active:scale-[0.95] transition-all cursor-pointer select-none !text-black" onclick="toggleDark(); this.innerHTML = document.documentElement.classList.contains('dark') ? getSunIcon() : getMoonIcon()" title="Toggle dark mode" id="dark-toggle-btn"></button>
+    <app-root></app-root>
+    <script>
+      (function() {
+        var saved = localStorage.getItem('dark-mode');
+        if (saved === 'true') {
+          document.documentElement.classList.add('dark');
+        }
+        var rtx = new URLSearchParams(window.location.search).get('rtx');
+        if (rtx === 'off') {
+          document.documentElement.classList.add('rtx-off');
+        }
+        var btn = document.getElementById('dark-toggle-btn');
+        btn.innerHTML = document.documentElement.classList.contains('dark')
+          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="currentColor" stroke="none"/><path d="M12 2.5v2M12 19.5v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2.5 12h2M19.5 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+        var rtxBtn = document.getElementById('rtx-toggle-btn');
+        var isOn = new URLSearchParams(window.location.search).get('rtx') !== 'off';
+        if (isOn) {
+          rtxBtn.classList.add('rtx-on');
+          rtxBtn.classList.remove('rtx-off');
+          rtxBtn.querySelector('.rtx-knob').style.left = '14px';
+        } else {
+          rtxBtn.classList.add('rtx-off');
+          rtxBtn.classList.remove('rtx-on');
+          rtxBtn.querySelector('.rtx-knob').style.left = '2px';
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -1,4 +1,5 @@
-import { Component, signal, afterNextRender } from '@angular/core';
+import { Component, signal, inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { injectContentFiles, ContentFile } from '@analogjs/content';
 
@@ -70,7 +71,7 @@ export interface PageAttributes {
         <button class="filter-btn {{activeDevFilter() === 'other' ? 'active' : ''}}" (click)="setDevFilter('other')">Other</button>
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
-        @for (post of devs; track post.attributes) {
+        @for (post of visibleDevs; track post.attributes) {
           <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card border-card" [class.hidden]="isDevHidden(post)" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
@@ -105,6 +106,11 @@ export interface PageAttributes {
           </div>
         }
       </div>
+      @if (showLoadMore) {
+        <div class="flex justify-center mt-4">
+          <button class="filter-btn" (click)="loadMoreDevs()">Load more</button>
+        </div>
+      }
     </div>
 
     <div class="p-5 pb-0 max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8">
@@ -197,6 +203,15 @@ export interface PageAttributes {
       (close)="closeProject()"
     />
 
+    <div class="preload-images" aria-hidden="true">
+      @for (post of devs; track post.attributes) {
+        <img [src]="blurUrl(post.attributes.thumbnail)" loading="eager" decoding="async"/>
+      }
+      @for (post of motions; track post.attributes) {
+        <img [src]="blurUrl(post.attributes.thumbnail)" loading="eager" decoding="async"/>
+      }
+    </div>
+
     <app-link-confirm-modal
       [open]="!!pendingUrl()"
       [url]="pendingUrl()!"
@@ -261,6 +276,19 @@ export interface PageAttributes {
       border-color: #fff !important;
     }
 
+    .preload-images {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .preload-images img {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
     .pages-box {
       background-color: #9ea7bc;
       background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 2px, transparent 2px, transparent 6px, transparent 10px);
@@ -275,18 +303,49 @@ export interface PageAttributes {
   `],
 })
 
-export default class BlogComponent {
-  constructor() {
-    afterNextRender(() => {
-      if (typeof window === 'undefined') return;
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('rtx') === 'off') return;
-      document.querySelectorAll<HTMLImageElement>('.lazy-img').forEach(img => {
-        const thumb = img.getAttribute('data-thumb');
-        if (thumb) img.src = thumb;
-      });
+export default class BlogComponent implements AfterViewInit {
+  private platformId = inject(PLATFORM_ID);
 
+  ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const params = new URLSearchParams(window.location.search);
+
+    let lastCols = this.getDevCols();
+    const updateThreshold = () => {
+      const cols = this.getDevCols();
+      if (cols !== lastCols) {
+        lastCols = cols;
+        const items = cols === 4 ? 4 : cols === 3 ? 3 : cols === 2 ? 2 : 2;
+        this.itemsPerPage.set(items);
+      }
+    };
+    window.addEventListener('resize', updateThreshold);
+
+    this.itemsPerPage.set(this.getDevCols() === 4 ? 4 : this.getDevCols() === 3 ? 3 : this.getDevCols() === 2 ? 2 : 2);
+
+    if (params.get('rtx') === 'off') return;
+    document.querySelectorAll<HTMLImageElement>('.lazy-img').forEach(img => {
+      const thumb = img.getAttribute('data-thumb');
+      if (thumb) img.src = thumb;
     });
+
+    const observer = new MutationObserver(mutations => {
+      for (const m of mutations) {
+        for (const node of Array.from(m.addedNodes)) {
+          if (node instanceof HTMLElement) {
+            if (node.classList?.contains('lazy-img')) {
+              const thumb = node.getAttribute('data-thumb');
+              if (thumb && !(node as HTMLImageElement).getAttribute('src')) (node as HTMLImageElement).src = thumb;
+            }
+            Array.from(node.querySelectorAll?.<HTMLImageElement>('.lazy-img') || []).forEach(img => {
+              const thumb = img.getAttribute('data-thumb');
+              if (thumb && !img.getAttribute('src')) img.src = thumb;
+            });
+          }
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   readonly socials = injectContentFiles<SocialAttributes>(
@@ -303,9 +362,25 @@ export default class BlogComponent {
   );
 
   readonly activeDevFilter = signal<string>('all');
+  readonly pagesLoaded = signal<number>(2);
+  readonly itemsPerPage = signal<number>(2);
 
   setDevFilter(filter: string) {
     this.activeDevFilter.set(filter);
+    this.pagesLoaded.set(1);
+  }
+
+  getDevCols(): number {
+    if (typeof window === 'undefined') return 1;
+    const w = window.innerWidth;
+    if (w >= 1024) return 4;
+    if (w >= 768) return 3;
+    if (w >= 512) return 2;
+    return 1;
+  }
+
+  loadMoreDevs() {
+    this.pagesLoaded.update(n => n + 1);
   }
 
   isDevHidden(post: ContentFile<PostAttributes>): boolean {
@@ -320,6 +395,14 @@ export default class BlogComponent {
     if (filter === 'all') return this.devs;
     if (filter === 'other') return this.devs.filter(d => d.attributes.category !== 'rustdev' && d.attributes.category !== 'gamedev' && d.attributes.category !== 'webdev');
     return this.devs.filter(d => d.attributes.category === filter);
+  }
+
+  get visibleDevs() {
+    return this.filteredDevs.slice(0, this.pagesLoaded() * this.itemsPerPage());
+  }
+
+  get showLoadMore() {
+    return this.filteredDevs.length > this.pagesLoaded() * this.itemsPerPage();
   }
 
   readonly selectedProject = signal<PostAttributes | null>(null);
