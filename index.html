@@ -75,7 +75,7 @@
       var _g = 0;
       function damageProfile() {
         var img = document.getElementById('blur-profile-img');
-        img.classList.remove('damage-shake');
+        img.classList.remove('damage-shake', 'block-flash');
         void img.getBoundingClientRect();
         img.classList.add('damage-shake');
         _g++;
@@ -99,7 +99,7 @@
       }
       function blockDamage() {
         var img = document.getElementById('blur-profile-img');
-        img.classList.remove('block-flash');
+        img.classList.remove('block-flash', 'damage-shake');
         void img.getBoundingClientRect();
         img.classList.add('block-flash');
         _g++;
