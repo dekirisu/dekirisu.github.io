@@ -55,28 +55,6 @@ export interface PageAttributes {
       }
     </div>
 
-    <div class="p-5 pb-0 max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8">
-      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        @for (post of pages; track post.attributes.slug) {
-          <a class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 page-card border-card cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}" (click)="openLink(post.attributes.url); $event.preventDefault()">
-            <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
-            <div class="absolute inset-0 bg-black/30"></div>
-            <div class="relative m-2">
-              <div class="bg-white border-2 rounded-md text-black inline-block px-3 py-1 font-bold shadow-sm/30">
-                {{post.attributes.title}}
-              </div>
-              <div class="text-white font-bold text-sm mt-1 max-w-[175px] leading-tight" style="margin-left: 6px; text-shadow: 0 0 4px #000, 0 0 16px #000, 0 0 24px #000;">
-                {{post.attributes.description}}
-              </div>
-            </div>
-            <div class="absolute right-2 bottom-2 bg-deki-orange border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs flex items-center gap-1">
-              <span class="text-sm">→</span>
-              <span>explore</span>
-            </div>
-          </a>
-        }
-      </div>
-    </div>
 
      <div class="p-5  max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8 text-left">
       <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 border-black rounded-lg shadow-sm/30 align-top mr-1"/>
@@ -125,6 +103,34 @@ export interface PageAttributes {
             </div>
 
           </div>
+        }
+      </div>
+    </div>
+
+    <div class="p-5 pb-0 max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8">
+      <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 border-black rounded-lg shadow-sm/30 align-top mr-1"/>
+      <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative">
+        <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
+        Other Sites <b class="text-deki-pink">by me</b>
+      </h3>
+      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pages-box">
+        @for (post of pages; track post.attributes.slug) {
+          <a class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 page-card border-card cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}" (click)="openLink(post.attributes.url); $event.preventDefault()">
+            <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
+            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="relative m-2">
+              <div class="bg-black text-deki-orange inline-block px-3 py-1 font-bold shadow-sm/30 rounded-md">
+                {{post.attributes.title}}
+              </div>
+              <div class="text-white font-bold text-sm mt-1 max-w-[175px] leading-tight" style="margin-left: 6px; text-shadow: 0 0 4px #000, 0 0 16px #000, 0 0 24px #000;">
+                {{post.attributes.description}}
+              </div>
+            </div>
+            <div class="absolute right-2 bottom-2 bg-deki-orange border-2 border-black rounded-md text-black font-bold px-2 py-0.5 shadow-sm/30 text-xs flex items-center gap-1">
+              <span class="text-sm">→</span>
+              <span>explore</span>
+            </div>
+          </a>
         }
       </div>
     </div>
@@ -253,6 +259,18 @@ export interface PageAttributes {
 
     :host-context(html.dark) .border-card {
       border-color: #fff !important;
+    }
+
+    .pages-box {
+      background-color: #9ea7bc;
+      background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 2px, transparent 2px, transparent 6px, transparent 10px);
+      padding: 29px;
+      border-radius: 6px;
+      border: 2px solid #000;
+    }
+
+    :host-context(html.dark) .pages-box {
+      background-color: #2d3340;
     }
   `],
 })
