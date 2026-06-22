@@ -1,4 +1,4 @@
-import { Component, input, output, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, input, output, ViewEncapsulation, HostListener, effect } from '@angular/core';
 
 export interface ProjectDetail {
   title: string;
@@ -94,7 +94,7 @@ export interface ProjectDetail {
         width: 90%;
         max-height: 85vh;
         overflow-y: auto;
-        background-color: #fafaff;
+        background-color: #ffffff;
         border: 3px solid #000;
         border-radius: 16px;
         padding: 0;
@@ -103,8 +103,8 @@ export interface ProjectDetail {
       }
 
       html.dark .modal-content {
-        background-color: #1a1a2e;
-        border-color: #3a3a50;
+        background-color: #15151e;
+        border-color: #fff;
       }
 
       .modal-close {
@@ -123,6 +123,7 @@ export interface ProjectDetail {
         cursor: pointer;
         z-index: 2;
         transition: all 0.15s ease;
+        color: #000;
       }
 
       html.dark .modal-close {
@@ -231,19 +232,9 @@ export interface ProjectDetail {
         transition: all 0.15s ease;
       }
 
-      html.dark .modal-link {
-        background-color: #2a2a3e;
-        border-color: #3a3a50;
-        color: #fff;
-      }
-
       .modal-link:hover {
         background-color: #8ad4fb;
         transform: scale(1.05);
-      }
-
-      html.dark .modal-link:hover {
-        background-color: #3a3a50;
       }
 
       .modal-tech {
@@ -278,7 +269,7 @@ export interface ProjectDetail {
         align-items: center;
         gap: 5px;
         background-color: #fafaff;
-        border: 2px solid #000;
+        border: 2px solid #000 !important;
         border-radius: 8px;
         padding: 4px 8px;
         font-size: 0.75rem;
@@ -287,7 +278,6 @@ export interface ProjectDetail {
 
       html.dark .tech-pill {
         background-color: #2a2a3e;
-        border-color: #3a3a50;
       }
 
       .tech-pill:hover {
@@ -405,6 +395,16 @@ export default class ProjectModalComponent {
     if (!thumbnail) return '';
     const name = thumbnail.split('/').pop()!;
     return '/thumbnails/blurred/' + name.replace(/\.[^.]+$/, '.png');
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.open()) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
   }
 
   @HostListener('document:keydown.escape')

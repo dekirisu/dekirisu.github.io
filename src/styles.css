@@ -133,6 +133,10 @@ html.dark .border-\[\#d8dce4\] {
   border-color: #232338 !important;
 }
 
+.border-t-2 {
+  transition: border-color 0.3s ease;
+}
+
 html.rtx-off .lazy-img {
   display: none !important;
 }

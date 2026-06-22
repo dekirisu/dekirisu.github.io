@@ -36,7 +36,7 @@ export interface PageAttributes {
                 <div class="size-28 border-2 border-black rounded-md shadow-sm/20 relative overflow-hidden cursor-pointer" style="background-image: url('/thumbnails/blurred/profile.png'); background-size: cover; background-position: center; image-rendering: pixelated;" id="blur-profile-img" onclick="blockDamage()" title="click to block">
                     <img class="size-28 absolute inset-0 lazy-img" src="profile.jpg" id="profile-img" onload="this.classList.add('loaded')"/>
                 </div>
-                <div class="text-2xl py-1 text-center font-bold text-shadow-xs/20">Dekirisu</div>
+                <div class="text-2xl py-1 text-center font-bold text-shadow-xs/20 !text-black">Dekirisu</div>
             </div>
             <div class="bg-terminal text-white px-4 py-2 rounded-lg font-bold shadow-sm/30 w-40 text-lg inline-block relative align-top top-5 ml-2">
                 <div class="absolute size-[24px] left-[-10px] bg-terminal rotate-45 top-[10px] rounded-sm shadow-sm/30"></div>
@@ -57,7 +57,7 @@ export interface PageAttributes {
     <div class="p-5 pb-0 max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8">
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         @for (post of pages; track post.attributes.slug) {
-          <a href="{{post.attributes.url}}" target="_blank" class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}">
+          <a href="{{post.attributes.url}}" target="_blank" class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 page-card border-card cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}">
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="relative m-2">
@@ -78,7 +78,7 @@ export interface PageAttributes {
     </div>
 
      <div class="p-5  max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8 text-left">
-      <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
+      <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 border-black rounded-lg shadow-sm/30 align-top mr-1"/>
       <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative ">
         <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
         Things I <b class="text-deki-pink">develop</b> by <b class="text-deki-orange">myself</b><b> !</b>
@@ -92,7 +92,7 @@ export interface PageAttributes {
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of devs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card" [class.hidden]="activeDevFilter() !== 'all' && post.attributes.category !== activeDevFilter()" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card border-card" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
@@ -117,7 +117,7 @@ export interface PageAttributes {
 
             <div class="p-1 gap-1 flex absolute bottom-1 right-1">
               @for (usd of post.attributes.used; track usd) {
-                <div class="p-1 bg-white gap-1 rounded-lg border-2 shadow-sm/30">
+                <div class="p-1 bg-white gap-1 rounded-lg border-2 border-black shadow-sm/30">
                   <img src="/software/{{usd}}.svg" class="size-6 inline-block" title="{{usd}}">
                 </div>
               }
@@ -130,14 +130,14 @@ export interface PageAttributes {
 
 
     <div class="p-5  max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8 text-left">
-      <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 rounded-lg shadow-sm/30 align-top mr-1"/>
+      <img src="/profile.jpg" class="inline-block size-11 xs:size-12 border-2 border-black rounded-lg shadow-sm/30 align-top mr-1"/>
       <h3 class="text-xl xs:text-2xl font-bold mb-6 xs:mb-4 bg-terminal text-white py-2 px-4 inline-block rounded-md shadow-sm/30 relative">
         <div class="absolute size-[16px] left-[-8px] bg-terminal rotate-45 top-[8px] shadow-sm/30"></div>
         Things I <b class="text-deki-pink">animated</b> <b class="text-deki-orange">..</b>
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 border-card" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
@@ -162,7 +162,7 @@ export interface PageAttributes {
 
             <div class="p-1 gap-1 flex absolute bottom-1 right-1">
               @for (usd of post.attributes.used; track usd) {
-                <div class="p-1 bg-white gap-1 rounded-lg border-2 shadow-sm/30">
+                <div class="p-1 bg-white gap-1 rounded-lg border-2 border-black shadow-sm/30">
                   <img src="/software/{{usd}}.svg" class="size-6 inline-block" title="{{usd}}">
                 </div>
               }
@@ -237,6 +237,14 @@ export interface PageAttributes {
 
     .dev-card.hidden {
       display: none !important;
+    }
+
+    .border-card {
+      border-color: #000;
+    }
+
+    :host-context(html.dark) .border-card {
+      border-color: #fff !important;
     }
   `],
 })
