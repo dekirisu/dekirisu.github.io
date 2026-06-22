@@ -24,7 +24,9 @@ export interface ProjectDetail {
           
           <div class="modal-header">
             <div class="relative inline-block">
-              <img [src]="project()?.thumbnail" class="modal-thumbnail" alt="{{project()?.title}}"/>
+              <div class="modal-thumbnail relative overflow-hidden" style="background-image: url('{{blurUrl(project()?.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;">
+                <img [src]="open() ? project()?.thumbnail : ''" [attr.data-thumb]="project()?.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
+              </div>
               @if (project()?.state) {
                 <div [class]="stateClass(project()!.state!)" class="absolute top-[-8px] left-[-8px]">
                   {{stateInfo(project()!.state!).label}}
@@ -149,10 +151,18 @@ export interface ProjectDetail {
       .modal-thumbnail {
         width: 180px;
         height: 120px;
-        object-fit: cover;
         border: 3px solid #000;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-thumbnail .lazy-img {
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .modal-thumbnail .lazy-img.loaded {
+        opacity: 1;
       }
 
       html.dark .modal-thumbnail {
@@ -389,6 +399,12 @@ export default class ProjectModalComponent {
   stateClass(state: string): string {
     const { bg, text } = this.stateInfo(state);
     return bg + ' border-2 border-black rounded-lg ' + text + ' font-bold px-3 py-[10px] shadow-sm/30 w-fit text-xs uppercase tracking-wider leading-none flex items-center';
+  }
+
+  blurUrl(thumbnail: string | undefined): string {
+    if (!thumbnail) return '';
+    const name = thumbnail.split('/').pop()!;
+    return '/thumbnails/blurred/' + name.replace(/\.[^.]+$/, '.png');
   }
 
   @HostListener('document:keydown.escape')
