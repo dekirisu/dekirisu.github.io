@@ -1,6 +1,6 @@
 import { Component, signal, afterNextRender } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { injectContentFiles } from '@analogjs/content';
+import { injectContentFiles, ContentFile } from '@analogjs/content';
 
 import PostAttributes from '../post-attributes';
 import ProjectModal from '../components/project-modal';
@@ -71,7 +71,7 @@ export interface PageAttributes {
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of devs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card border-card" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card border-card" [class.hidden]="isDevHidden(post)" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
@@ -306,6 +306,13 @@ export default class BlogComponent {
 
   setDevFilter(filter: string) {
     this.activeDevFilter.set(filter);
+  }
+
+  isDevHidden(post: ContentFile<PostAttributes>): boolean {
+    const filter = this.activeDevFilter();
+    if (filter === 'all') return false;
+    if (filter === 'other') return post.attributes.category === 'rustdev' || post.attributes.category === 'gamedev' || post.attributes.category === 'webdev';
+    return post.attributes.category !== filter;
   }
 
   get filteredDevs() {
