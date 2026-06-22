@@ -91,8 +91,8 @@ export interface PageAttributes {
         <button class="filter-btn {{activeDevFilter() === 'other' ? 'active' : ''}}" (click)="setDevFilter('other')">Other</button>
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
-        @for (post of filteredDevs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+        @for (post of devs; track post.attributes) {
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card" [class.hidden]="activeDevFilter() !== 'all' && post.attributes.category !== activeDevFilter()" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
@@ -233,6 +233,10 @@ export interface PageAttributes {
     html.dark .filter-btn.active {
       background-color: #1a3a5c;
       border: 3px solid #5a9ad4;
+    }
+
+    .dev-card.hidden {
+      display: none !important;
     }
   `],
 })
