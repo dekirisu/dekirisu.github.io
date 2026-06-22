@@ -1,4 +1,5 @@
-import { Component, input, output, ViewEncapsulation, HostListener, effect } from '@angular/core';
+import { Component, input, output, ViewEncapsulation, HostListener, signal, effect } from '@angular/core';
+import LinkConfirmModal from './link-confirm-modal';
 
 export interface ProjectDetail {
   title: string;
@@ -15,7 +16,7 @@ export interface ProjectDetail {
   selector: 'app-project-modal',
   standalone: true,
   encapsulation: ViewEncapsulation.None,
-  imports: [],
+  imports: [LinkConfirmModal],
   template: `
     @if (open()) {
       <div class="modal-overlay" (click)="close.emit()">
@@ -45,7 +46,7 @@ export interface ProjectDetail {
           
           <div class="modal-links">
             @if (project()?.usage) {
-              <a [href]="project()!.usage[1]" target="_blank" class="modal-link" title="{{project()!.usage[0]}}">
+              <a (click)="openLink(project()!.usage[1]); $event.preventDefault()" class="modal-link cursor-pointer" [title]="project()!.usage[0]">
                 <img src="/socials/{{project()!.usage[0]}}.svg" class="size-5 inline-block align-middle mr-1"/>
                 {{project()!.usage[0]}}
               </a>
@@ -68,6 +69,15 @@ export interface ProjectDetail {
           </div>
         </div>
       </div>
+    }
+
+    @if (pendingUrl()) {
+      <app-link-confirm-modal
+        [open]="!!pendingUrl()"
+        [url]="pendingUrl()!"
+        (action)="handleLinkAction($event)"
+        (cancel)="handleLinkAction($event)"
+      />
     }
   `,
   styles: [
@@ -334,6 +344,20 @@ export default class ProjectModalComponent {
   readonly open = input.required<boolean>();
   readonly project = input<ProjectDetail | null>(null);
   readonly close = output<void>();
+  readonly pendingUrl = signal<string | null>(null);
+
+  openLink(url: string) {
+    this.pendingUrl.set(url);
+  }
+
+  handleLinkAction(action: 'newtab' | 'here' | 'cancel') {
+    if (action === 'newtab' && this.pendingUrl()) {
+      window.open(this.pendingUrl()!, '_blank', 'noopener,noreferrer');
+    } else if (action === 'here' && this.pendingUrl()) {
+      window.location.href = this.pendingUrl()!;
+    }
+    this.pendingUrl.set(null);
+  }
 
   private static readonly TECH_MAP: Record<string, { name: string; reason: string }> = {
     analog: { name: 'Analog', reason: 'SSG framework' },
@@ -409,6 +433,10 @@ export default class ProjectModalComponent {
 
   @HostListener('document:keydown.escape')
   onEscape() {
-    this.close.emit();
+    if (this.pendingUrl()) {
+      this.handleLinkAction('cancel');
+    } else {
+      this.close.emit();
+    }
   }
 }

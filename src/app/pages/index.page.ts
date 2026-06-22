@@ -4,6 +4,7 @@ import { injectContentFiles } from '@analogjs/content';
 
 import PostAttributes from '../post-attributes';
 import ProjectModal from '../components/project-modal';
+import LinkConfirmModal from '../components/link-confirm-modal';
 
 export interface SocialAttributes {
   icon: string;
@@ -20,7 +21,7 @@ export interface PageAttributes {
 
 @Component({
   selector: 'app-blog',
-  imports: [RouterLink, ProjectModal],
+  imports: [RouterLink, ProjectModal, LinkConfirmModal],
 
   template: `
 
@@ -48,7 +49,7 @@ export interface PageAttributes {
 
      <div class="gap-2 flex justify-center">
       @for (post of socials; track post.attributes.link) {
-        <a href={{post.attributes.link}} target="_blank" class="bg-profile-lite inline-block rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 hover:-translate-y-0.5 active:scale-110 transition-all duration-200 bg-[#fafaff]" title="my {{post.attributes.icon.toUpperCase()}}" rel="me">
+        <a class="bg-profile-lite inline-block rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 hover:-translate-y-0.5 active:scale-110 transition-all duration-200 bg-[#fafaff] cursor-pointer" title="my {{post.attributes.icon.toUpperCase()}}" rel="me" (click)="openLink(post.attributes.link); $event.preventDefault()">
           <img src="/socials/{{post.attributes.icon}}.svg" class="size-6">         
         </a>
       }
@@ -57,7 +58,7 @@ export interface PageAttributes {
     <div class="p-5 pb-0 max-w-[1200px] border-t-2 border-[#d8dce4] m-auto mt-8">
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         @for (post of pages; track post.attributes.slug) {
-          <a href="{{post.attributes.url}}" target="_blank" class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 page-card border-card cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}">
+          <a class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 page-card border-card cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}" (click)="openLink(post.attributes.url); $event.preventDefault()">
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="relative m-2">
@@ -105,7 +106,7 @@ export interface PageAttributes {
               }
             </div>
 
-            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" target="_blank" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="$event.stopPropagation()">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20 cursor-pointer" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="openLink(post.attributes.usage[1]); $event.stopPropagation()">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
@@ -150,7 +151,7 @@ export interface PageAttributes {
               }
             </div>
 
-            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20" href="{{post.attributes.usage[1]}}" target="_blank" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="$event.stopPropagation()">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20 cursor-pointer" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="openLink(post.attributes.usage[1]); $event.stopPropagation()">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
@@ -188,6 +189,13 @@ export interface PageAttributes {
       [open]="!!selectedProject()"
       [project]="selectedProject()"
       (close)="closeProject()"
+    />
+
+    <app-link-confirm-modal
+      [open]="!!pendingUrl()"
+      [url]="pendingUrl()!"
+      (action)="handleLinkAction($event)"
+      (cancel)="handleLinkAction($event)"
     />
   `,
   styles: [`
@@ -290,6 +298,20 @@ export default class BlogComponent {
   }
 
   readonly selectedProject = signal<PostAttributes | null>(null);
+  readonly pendingUrl = signal<string | null>(null);
+
+  openLink(url: string) {
+    this.pendingUrl.set(url);
+  }
+
+  handleLinkAction(action: 'newtab' | 'here' | 'cancel') {
+    if (action === 'newtab' && this.pendingUrl()) {
+      window.open(this.pendingUrl()!, '_blank', 'noopener,noreferrer');
+    } else if (action === 'here' && this.pendingUrl()) {
+      window.location.href = this.pendingUrl()!;
+    }
+    this.pendingUrl.set(null);
+  }
 
   openProject(project: PostAttributes) {
     this.selectedProject.set(project);
