@@ -1,4 +1,4 @@
-import { Component, input, output, ViewEncapsulation } from '@angular/core';
+import { Component, input, output, ViewEncapsulation, effect } from '@angular/core';
 
 export type LinkAction = 'newtab' | 'here' | 'cancel';
 
@@ -38,8 +38,8 @@ export type LinkAction = 'newtab' | 'here' | 'cancel';
       }
 
       html.dark .link-modal-content {
-        background-color: #1a1a2e;
-        border-color: #3a3a50;
+        background-color: #15151e;
+        border-color: #fff;
       }
 
       .link-modal-title {
@@ -66,8 +66,8 @@ export type LinkAction = 'newtab' | 'here' | 'cancel';
 
       html.dark .link-modal-url {
         color: #aaa;
-        background: #2a2a3e;
-        border-color: #3a3a50;
+        background: #232338;
+        border-color: #232338;
       }
 
       .link-modal-actions {
@@ -189,4 +189,14 @@ export default class LinkConfirmModalComponent {
   readonly url = input.required<string>();
   readonly action = output<LinkAction>();
   readonly cancel = output<LinkAction>();
+
+  constructor() {
+    effect(() => {
+      if (this.open()) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+  }
 }
