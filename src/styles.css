@@ -153,6 +153,10 @@ html.rtx-off .lazy-img {
   background-color: #8ad4fb;
 }
 
+#rtx-toggle-btn.rtx-on span {
+  color: #000 !important;
+}
+
 #rtx-toggle-btn.rtx-off:hover {
   background-color: #ffdba1;
 }
@@ -223,6 +227,10 @@ html.dark #rtx-toggle-btn.rtx-off .rtx-lane {
   background-color: #e06666 !important;
   border-color: #000;
   color: #fff;
+}
+
+#rtx-toggle-btn.rtx-off span {
+  color: #fff !important;
 }
 
 #rtx-toggle-btn.rtx-off .rtx-knob {

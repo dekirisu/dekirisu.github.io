@@ -306,9 +306,64 @@ export interface PageAttributes {
 export default class BlogComponent implements AfterViewInit {
   private platformId = inject(PLATFORM_ID);
 
+  readonly rtxOn = signal<boolean>(true);
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      this.rtxOn.set(params.get('rtx') !== 'off');
+      (window as any).__toggleRTX__ = this.toggleRTX.bind(this);
+    }
+  }
+
+  toggleRTX() {
+    if (typeof window === 'undefined') return;
+    this.rtxOn.update(v => !v);
+    const url = new URL(window.location.href);
+    if (this.rtxOn()) {
+      url.searchParams.delete('rtx');
+    } else {
+      url.searchParams.set('rtx', 'off');
+    }
+    window.history.replaceState(null, '', url.toString());
+    this.updateLazyImages();
+    this.updateBtnUI();
+  }
+
+  updateBtnUI() {
+    const btn = document.getElementById('rtx-toggle-btn');
+    if (!btn) return;
+    const isOn = this.rtxOn();
+    btn.classList.toggle('rtx-on', isOn);
+    btn.classList.toggle('rtx-off', !isOn);
+    const knob = btn.querySelector('.rtx-knob') as HTMLElement | null;
+    if (knob) knob.style.left = isOn ? '14px' : '2px';
+    document.documentElement.classList.toggle('rtx-off', !isOn);
+  }
+
+  updateLazyImages() {
+    if (typeof window === 'undefined') return;
+    const imgs = document.querySelectorAll<HTMLImageElement>('.lazy-img');
+    imgs.forEach(img => {
+      const thumb = img.getAttribute('data-thumb');
+      if (thumb && this.rtxOn()) {
+        img.src = thumb;
+        img.classList.add('loaded');
+        img.style.display = '';
+      } else if (thumb && !this.rtxOn()) {
+        img.src = '';
+        img.classList.remove('loaded');
+        img.style.display = 'none';
+      } else if (!thumb && !this.rtxOn()) {
+        img.style.display = 'none';
+      } else if (!thumb && this.rtxOn()) {
+        img.style.display = '';
+      }
+    });
+  }
+
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
-    const params = new URLSearchParams(window.location.search);
 
     let lastCols = this.getDevCols();
     const updateThreshold = () => {
@@ -323,13 +378,27 @@ export default class BlogComponent implements AfterViewInit {
 
     this.itemsPerPage.set(this.getDevCols() === 4 ? 4 : this.getDevCols() === 3 ? 3 : this.getDevCols() === 2 ? 2 : 2);
 
-    if (params.get('rtx') === 'off') return;
-    document.querySelectorAll<HTMLImageElement>('.lazy-img').forEach(img => {
-      const thumb = img.getAttribute('data-thumb');
-      if (thumb) img.src = thumb;
-    });
+    this.updateLazyImages();
+
+    const onPopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      this.rtxOn.set(params.get('rtx') !== 'off');
+      if (this.rtxOn()) {
+        this.updateLazyImages();
+      } else {
+        document.querySelectorAll<HTMLImageElement>('.lazy-img').forEach(img => {
+          img.src = '';
+          img.style.display = 'none';
+        });
+      }
+      this.updateBtnUI();
+    };
+    window.addEventListener('popstate', onPopState);
+
+    this.updateBtnUI();
 
     const observer = new MutationObserver(mutations => {
+      if (!this.rtxOn()) return;
       for (const m of mutations) {
         for (const node of Array.from(m.addedNodes)) {
           if (node instanceof HTMLElement) {
@@ -367,7 +436,6 @@ export default class BlogComponent implements AfterViewInit {
 
   setDevFilter(filter: string) {
     this.activeDevFilter.set(filter);
-    this.pagesLoaded.set(1);
   }
 
   getDevCols(): number {
