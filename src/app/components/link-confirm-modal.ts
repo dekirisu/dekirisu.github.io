@@ -1,4 +1,4 @@
-import { Component, input, output, ViewEncapsulation, effect } from '@angular/core';
+import { Component, input, output, ViewEncapsulation, effect, signal } from '@angular/core';
 
 export type LinkAction = 'newtab' | 'here' | 'cancel';
 
@@ -68,6 +68,26 @@ export type LinkAction = 'newtab' | 'here' | 'cancel';
         color: #aaa;
         background: #232338;
         border-color: #232338;
+      }
+
+      .link-modal-remember {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 16px;
+        cursor: pointer;
+      }
+
+      html.dark .link-modal-remember {
+        color: #aaa;
+      }
+
+      .link-modal-remember input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
       }
 
       .link-modal-actions {
@@ -172,12 +192,16 @@ export type LinkAction = 'newtab' | 'here' | 'cancel';
         <div class="link-modal-content" (click)="$event.stopPropagation()">
           <div class="link-modal-title">Open this link?</div>
           <div class="link-modal-url">{{url()}}</div>
+          <label class="link-modal-remember">
+            <input type="checkbox" [checked]="remembered()" (change)="remembered.set($any($event.target).checked)"/>
+            Remember
+          </label>
           <div class="link-modal-actions">
             <div class="link-modal-action-group">
-              <button class="link-modal-btn cancel" (click)="cancel.emit('cancel')">Cancel</button>
-              <button class="link-modal-btn here" (click)="action.emit('here')">Here</button>
+              <a class="link-modal-btn cancel" href="#" (click)="cancel.emit('cancel'); $event.preventDefault()">Cancel</a>
+              <a class="link-modal-btn here" [href]="url()">Here</a>
             </div>
-            <button class="link-modal-btn newtab" (click)="action.emit('newtab')">New Tab</button>
+            <a class="link-modal-btn newtab" [href]="url()" target="_blank" rel="noopener noreferrer">New Tab</a>
           </div>
         </div>
       </div>
@@ -189,14 +213,29 @@ export default class LinkConfirmModalComponent {
   readonly url = input.required<string>();
   readonly action = output<LinkAction>();
   readonly cancel = output<LinkAction>();
+  readonly remembered = signal<boolean>(false);
 
   constructor() {
     effect(() => {
       if (this.open()) {
         document.body.style.overflow = 'hidden';
+        this.remembered.set(false);
       } else {
         document.body.style.overflow = '';
       }
     });
+  }
+
+  handleAction(action: 'newtab' | 'here') {
+    if (this.remembered()) {
+      localStorage.setItem('link-action', action);
+    }
+    this.action.emit(action);
+  }
+
+  static getPreferredAction(): 'newtab' | 'here' | null {
+    const saved = localStorage.getItem('link-action');
+    if (saved === 'newtab' || saved === 'here') return saved;
+    return null;
   }
 }

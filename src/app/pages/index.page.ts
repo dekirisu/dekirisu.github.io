@@ -50,7 +50,7 @@ export interface PageAttributes {
 
      <div class="gap-2 flex justify-center">
       @for (post of socials; track post.attributes.link) {
-        <a class="bg-profile-lite inline-block rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 hover:-translate-y-0.5 active:scale-110 transition-all duration-200 bg-[#fafaff] cursor-pointer" title="my {{post.attributes.icon.toUpperCase()}}" rel="me" (click)="openLink(post.attributes.link); $event.preventDefault()">
+        <a class="bg-profile-lite inline-block rounded-2xl hover:rounded-3xl p-2 border-2 border-black shadow-sm/30 hover:invert hover:scale-130 hover:-translate-y-0.5 active:scale-110 transition-all duration-200 bg-[#fafaff] cursor-pointer" title="my {{post.attributes.icon.toUpperCase()}}" rel="me" [href]="post.attributes.link" (click)="openLink(post.attributes.link); $event.preventDefault()">
           <img src="/socials/{{post.attributes.icon}}.svg" class="size-6">         
         </a>
       }
@@ -72,7 +72,7 @@ export interface PageAttributes {
       </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of visibleDevs; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card border-card" [class.hidden]="isDevHidden(post)" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 dev-card border-card" [class.hidden]="isDevHidden(post)" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" [attr.href]="post.attributes.usage[1]">
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
@@ -85,7 +85,7 @@ export interface PageAttributes {
               }
             </div>
 
-            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20 cursor-pointer" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="openLink(post.attributes.usage[1]); $event.stopPropagation()">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20 cursor-pointer" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" [href]="post.attributes.usage[1]" (click)="openLink(post.attributes.usage[1]); $event.preventDefault(); $event.stopPropagation()">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
@@ -121,7 +121,7 @@ export interface PageAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pages-box">
         @for (post of pages; track post.attributes.slug) {
-          <a class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 page-card border-card cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}" (click)="openLink(post.attributes.url); $event.preventDefault()">
+          <a class="h-[136px] rounded-xl overflow-hidden bg-center shadow-md/30 relative border-2 page-card border-card cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" title="{{post.attributes.title}}" [href]="post.attributes.url" (click)="openLink(post.attributes.url); $event.preventDefault()">
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover rounded-xl lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="relative m-2">
@@ -150,7 +150,7 @@ export interface PageAttributes {
       </h3>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" >
         @for (post of motions; track post.attributes) {
-          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 border-card" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" >
+          <div class="h-48 rounded-xl overflow-hidden relative border-2 shadow-md/30 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 border-card" style="background-image: url('{{blurUrl(post.attributes.thumbnail)}}'); background-size: cover; background-position: center; image-rendering: pixelated;" (click)="openProject(post.attributes)" [attr.href]="post.attributes.usage[1]">
             <img [attr.data-thumb]="post.attributes.thumbnail" class="absolute inset-0 w-full h-full object-cover lazy-img" loading="lazy" decoding="async" onload="this.classList.add('loaded')"/>
             <div class="m-2 absolute inset-0">
               <div class="bg-white border-2 rounded-md text-black inline-block px-2 font-bold shadow-sm/30">
@@ -163,7 +163,7 @@ export interface PageAttributes {
               }
             </div>
 
-            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20 cursor-pointer" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" (click)="openLink(post.attributes.usage[1]); $event.stopPropagation()">
+            <a class="bg-deki-orange border-2 rounded-md hover:rounded-2xl text-black font-bold block absolute right-2 top-2 p-1 size-7 hover:size-9 hover:right-1 hover:top-1 hover:bg-deki-blue transition-all shadow-sm/20 cursor-pointer" title="{{post.attributes.slug}} on {{post.attributes.usage[0].toUpperCase()}}" [href]="post.attributes.usage[1]" (click)="openLink(post.attributes.usage[1]); $event.preventDefault(); $event.stopPropagation()">
                 <img class="size-[100%]" src="/socials/{{post.attributes.usage[0]}}.svg"/>
             </a>
 
@@ -477,6 +477,15 @@ export default class BlogComponent implements AfterViewInit {
   readonly pendingUrl = signal<string | null>(null);
 
   openLink(url: string) {
+    const preferred = LinkConfirmModal.getPreferredAction();
+    if (preferred) {
+      if (preferred === 'newtab') {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } else if (preferred === 'here') {
+        window.location.href = url;
+      }
+      return;
+    }
     this.pendingUrl.set(url);
   }
 
